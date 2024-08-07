@@ -1,11 +1,4 @@
-CREATE TABLE Book (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT NOT NULL,
-    author TEXT NOT NULL,
-    published_date DATE
-);
-
-INSERT INTO Book (title, author, published_date) VALUES
+INSERT INTO books (title, author, published_date) VALUES
 ('To Kill a Mockingbird', 'Harper Lee', '1960-07-11'),
 ('1984', 'George Orwell', '1949-06-08'),
 ('Pride and Prejudice', 'Jane Austen', '1813-01-28'),
@@ -29,7 +22,7 @@ INSERT INTO Book (title, author, published_date) VALUES
 ('One Hundred Years of Solitude', 'Gabriel Garcia Marquez', '1967-05-30'),
 ('The Sound and the Fury', 'William Faulkner', '1929-01-01'),
 ('Don Quixote', 'Miguel de Cervantes', '1605-01-16'),
-('In Search of Lost Time', 'Marcel Proust', '1913-11-14'),
+('In Search of Lost Time', 'Marcel Proust', '1913-11-14')
 ('Great Expectations', 'Charles Dickens', '1861-08-01'),
 ('Catch-22', 'Joseph Heller', '1961-11-10'),
 ('Lolita', 'Vladimir Nabokov', '1955-09-15'),

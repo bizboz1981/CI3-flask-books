@@ -1,17 +1,17 @@
 from flask import Flask, render_template, request # type: ignore
-from flask_sqlalchemy import SQLAlchemy # type: ignore
-from flask_migrate import Migrate # type: ignore
 import os
+from extensions import db, migrate
+from models import Book, Review, Category, BookCategory, ReviewVote, User, Authentication
 
 app = Flask(__name__)
 
 # Configuration for SQLite database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///books.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(app.instance_path, 'books.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize the database
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+db.init_app(app)
+migrate.init_app(app, db)
 
 @app.route('/')
 def home():
@@ -23,7 +23,8 @@ def about():
 
 @app.route('/books')
 def books():
-    return render_template('books.html')
+    all_books = Book.query.all()
+    return render_template('books.html', books=all_books)
 
 @app.route('/contact')
 def contact():
