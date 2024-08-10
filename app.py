@@ -5,7 +5,7 @@ from forms import RegistrationForm
 import secrets
 import datetime
 
-from flask import Flask, render_template, request, redirect # type: ignore
+from flask import Flask, render_template, request, redirect, url_for # type: ignore
 
 app = Flask(__name__)
 
