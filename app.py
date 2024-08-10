@@ -26,6 +26,11 @@ def books():
     all_books = Book.query.all()
     return render_template('books.html', books=all_books)
 
+@app.route('/book/<int:book_id>')
+def book_detail(book_id):
+    book = Book.query.get_or_404(book_id)
+    return render_template('book_detail.html', book=book)
+
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
