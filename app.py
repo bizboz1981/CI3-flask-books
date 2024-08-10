@@ -3,7 +3,7 @@ from extensions import db, migrate
 from models import Book, Review, Category, BookCategory, ReviewVote, User, Authentication
 from forms import RegistrationForm
 import secrets
-import datetime
+from datetime import datetime, timezone
 
 from flask import Flask, render_template, request, redirect, url_for # type: ignore
 
@@ -50,7 +50,7 @@ def register():
             username=form.username.data,
             email=form.email.data,
             profile_picture_url=form.profile_picture_url.data,
-            created_at=datetime.utcnow()
+            created_at = datetime.now(timezone.utc)
         )
         user.set_password(form.password.data)
         db.session.add(user)
