@@ -33,10 +33,22 @@ def books():
     all_books = Book.query.all()
     return render_template('books.html', books=all_books)
 
-@app.route('/book/<int:book_id>')
+@app.route('/book/<int:book_id>', methods=['GET', 'POST'])
 def book_detail(book_id):
     book = Book.query.get_or_404(book_id)
-    return render_template('book_detail.html', book=book)
+    form = ReviewForm()
+    if form.validate_on_submit() and current_user.is_authenticated:
+        review = Review(
+            rating=form.rating.data,
+            review_text=form.review_text.data,
+            book_id=book.book_id,
+            user_id=current_user.user_id
+        )
+        db.session.add(review)
+        db.session.commit()
+        flash('Your review has been added.')
+        return redirect(url_for('book_detail', book_id=book.book_id))
+    return render_template('book_detail.html', book=book, form=form)
 
 @app.route('/contact')
 def contact():
