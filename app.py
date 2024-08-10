@@ -1,9 +1,11 @@
-from flask import Flask, render_template, request # type: ignore
 import os
 from extensions import db, migrate
 from models import Book, Review, Category, BookCategory, ReviewVote, User, Authentication
 from forms import RegistrationForm
 import secrets
+import datetime
+
+from flask import Flask, render_template, request, redirect # type: ignore
 
 app = Flask(__name__)
 
@@ -47,13 +49,12 @@ def register():
         user = User(
             username=form.username.data,
             email=form.email.data,
-            password_hash=form.password.data, 
             profile_picture_url=form.profile_picture_url.data,
             created_at=datetime.utcnow()
         )
+        user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        # Redirect to a different page after successful registration
         return redirect(url_for('home'))
     return render_template('register.html', title='Register', form=form)
 
