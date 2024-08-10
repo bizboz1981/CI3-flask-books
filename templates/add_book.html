@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Add a New Book</h2>
+<form method="POST" action="{{ url_for('add_book') }}">
+    {{ form.hidden_tag() }}
+    {{ form.title.label }}<br>
+    {{ form.title(size=32) }}<br>
+    {{ form.author.label }}<br>
+    {{ form.author(size=32) }}<br>
+    {{ form.published_date.label }}<br>
+    {{ form.published_date() }}<br>
+    {{ form.isbn.label }}<br>
+    {{ form.isbn(size=32) }}<br>
+    {{ form.summary.label }}<br>
+    {{ form.summary(rows=5, cols=40) }}<br>
+    {{ form.cover_image_url.label }}<br>
+    {{ form.cover_image_url(size=32) }}<br>
+    {{ form.submit() }}
+</form>
+{% endblock %}
