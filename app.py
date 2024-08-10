@@ -35,6 +35,16 @@ def book_detail(book_id):
 def contact():
     return render_template('contact.html')
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm(csrf_enabled=False)
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+    return render_template('register.html', title='Register', form=form)
+
 if __name__ == '__main__':
     app.run(
         host=os.environ.get("IP", "0.0.0.0"),
