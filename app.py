@@ -88,6 +88,11 @@ def logout():
     return redirect(url_for('home'))
 
 
+@app.context_processor
+def inject_current_year():
+    return {'current_year': datetime.now().year}
+
+
 if __name__ == '__main__':
     app.run(
         host=os.environ.get("IP", "0.0.0.0"),
