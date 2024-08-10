@@ -1,7 +1,7 @@
 import os
 from extensions import db, migrate
 from models import Book, Review, Category, BookCategory, ReviewVote, User, Authentication
-from forms import RegistrationForm, LoginForm
+from forms import RegistrationForm, LoginForm, ReviewForm, BookForm
 from datetime import datetime, timezone
 from flask_login import login_user, logout_user, current_user, login_required, LoginManager, login_manager
 from flask import Flask, render_template, request, redirect, url_for, flash # type: ignore
@@ -92,6 +92,42 @@ def logout():
 def inject_current_year():
     return {'current_year': datetime.now().year}
 
+@app.route('/book/<int:book_id>/review', methods=['GET', 'POST'])
+@login_required
+def add_review(book_id):
+    form = ReviewForm()
+    book = Book.query.get_or_404(book_id)
+    if form.validate_on_submit():
+        review = Review(
+            rating=form.rating.data,
+            review_text=form.review_text.data,
+            book_id=book.id,
+            user_id=current_user.id
+        )
+        db.session.add(review)
+        db.session.commit()
+        flash('Your review has been added.')
+        return redirect(url_for('book_detail', book_id=book.id))
+    return render_template('add_review.html', form=form, book=book)
+
+@app.route('/add_book', methods=['GET', 'POST'])
+@login_required
+def add_book():
+    form = BookForm()
+    if form.validate_on_submit():
+        book = Book(
+            title=form.title.data,
+            author=form.author.data,
+            published_date=form.published_date.data,
+            isbn=form.isbn.data,
+            summary=form.summary.data,
+            cover_image_url=form.cover_image_url.data
+        )
+        db.session.add(book)
+        db.session.commit()
+        flash('The book has been added.')
+        return redirect(url_for('books'))
+    return render_template('add_book.html', form=form)
 
 if __name__ == '__main__':
     app.run(
