@@ -42,12 +42,19 @@ def contact():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    form = RegistrationForm(csrf_enabled=False)
+    form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
-        user.set_password(form.password.data)
+        user = User(
+            username=form.username.data,
+            email=form.email.data,
+            password_hash=form.password.data, 
+            profile_picture_url=form.profile_picture_url.data,
+            created_at=datetime.utcnow()
+        )
         db.session.add(user)
         db.session.commit()
+        # Redirect to a different page after successful registration
+        return redirect(url_for('home'))
     return render_template('register.html', title='Register', form=form)
 
 if __name__ == '__main__':
