@@ -4,7 +4,7 @@ from models import Book, Review, Category, BookCategory, ReviewVote, User, Authe
 from forms import RegistrationForm, LoginForm
 from datetime import datetime, timezone
 from flask_login import login_user, logout_user, current_user, login_required, LoginManager, login_manager
-from flask import Flask, render_template, request, redirect, url_for # type: ignore
+from flask import Flask, render_template, request, redirect, url_for, flash # type: ignore
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
