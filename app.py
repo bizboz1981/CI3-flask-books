@@ -1,11 +1,11 @@
 import os
 from extensions import db, migrate
 from models import Book, Review, Category, BookCategory, ReviewVote, User, Authentication
-from forms import RegistrationForm
-import secrets
+from forms import RegistrationForm, LoginForm
 from datetime import datetime, timezone
-
+from flask_login import login_user, logout_user, current_user, login_required, LoginManager, login_manager
 from flask import Flask, render_template, request, redirect, url_for # type: ignore
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
@@ -57,6 +57,29 @@ def register():
         db.session.commit()
         return redirect(url_for('home'))
     return render_template('register.html', title='Register', form=form)
+
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid email or password')
+            return redirect(url_for('login'))
+        login_user(user, remember=form.remember_me.data)
+        return redirect(url_for('home'))
+    return render_template('login.html', title='Login', form=form)
 
 if __name__ == '__main__':
     app.run(
