@@ -1,9 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
 <h2>{{ book.title }}</h2>
-<p><strong>Author:</strong> {{ book.author }}</p>
-<p><strong>Published Date:</strong> {{ book.published_date }}</p>
-<p><strong>ISBN:</strong> {{ book.isbn }}</p>
-<p><strong>Summary:</strong> {{ book.summary }}</p>
-<p><strong>Cover Image:</strong> <img src="{{ book.cover_image_url }}" alt="{{ book.title }} cover"></p>
+<p>Author: {{ book.author }}</p>
+<h3>Reviews</h3>
+<ul>
+    {% for review in book.reviews %}
+        <li>{{ review.rating }} stars - {{ review.review_text }} - {{ review.user.username }}</li>
+    {% endfor %}
+</ul>
+{% if current_user.is_authenticated %}
+    <h3>Leave a Review</h3>
+    <form method="POST" action="{{ url_for('book_detail', book_id=book.book_id) }}">
+        {{ form.hidden_tag() }}
+        {{ form.rating.label }}<br>
+        {{ form.rating(size=32) }}<br>
+        {{ form.review_text.label }}<br>
+        {{ form.review_text(rows=5, cols=40) }}<br>
+        {{ form.submit() }}
+    </form>
+{% else %}
+    <p><a href="{{ url_for('login') }}">Log in</a> to leave a review.</p>
+{% endif %}
 {% endblock %}
