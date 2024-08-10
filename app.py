@@ -81,6 +81,13 @@ def login():
         return redirect(url_for('home'))
     return render_template('login.html', title='Login', form=form)
 
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
+
+
 if __name__ == '__main__':
     app.run(
         host=os.environ.get("IP", "0.0.0.0"),
