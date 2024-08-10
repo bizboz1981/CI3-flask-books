@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from extensions import db
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -14,6 +15,13 @@ class User(db.Model):
     reviews = db.relationship('Review', backref='user', lazy=True)
     review_votes = db.relationship('ReviewVote', backref='user', lazy=True)
     authentication = db.relationship('Authentication', backref='user', lazy=True, uselist=False)
+    password_hash = db.Column(db.String(128))
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
     
     
 class Book(db.Model):
