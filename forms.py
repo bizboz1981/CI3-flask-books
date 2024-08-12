@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, URLField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, URLField, TextAreaField, SelectMultipleField
 from wtforms.validators import DataRequired, Email, EqualTo, Optional, URL, NumberRange, Length
 from wtforms import BooleanField, IntegerField, DateField
+from models import Category
 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -25,8 +26,15 @@ class ReviewForm(FlaskForm):
 class BookForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     author = StringField('Author', validators=[DataRequired()])
-    published_date = DateField('Published Date', validators=[Optional()])
-    isbn = StringField('ISBN', validators=[Optional(), Length(max=13)])
-    summary = TextAreaField('Summary', validators=[Optional()])
-    cover_image_url = StringField('Cover Image URL', validators=[Optional(), Length(max=255)])
+    published_date = StringField('Published Date', validators=[DataRequired()])
+    isbn = StringField('ISBN', validators=[Optional(), Length(min=10, max=13)])
+    summary = StringField('Summary', validators=[DataRequired()])
+    cover_image_url = StringField('Cover Image URL')
+    
+    categories = SelectMultipleField('Categories', coerce=int)
+    
     submit = SubmitField('Add Book')
+
+    def __init__(self, *args, **kwargs):
+        super(BookForm, self).__init__(*args, **kwargs)
+        self.categories.choices = [(category.category_id, category.category_name) for category in Category.query.all()]
