@@ -123,22 +123,32 @@ def add_review(book_id):
     return render_template('add_review.html', form=form, book=book)
 
 @app.route('/add_book', methods=['GET', 'POST'])
-@login_required
 def add_book():
     form = BookForm()
     if form.validate_on_submit():
+        
+        published_date_str = form.published_date.data
+        published_date = datetime.strptime(published_date_str, '%d/%m/%Y').date()
+        
         book = Book(
             title=form.title.data,
             author=form.author.data,
-            published_date=form.published_date.data,
+            published_date=published_date,
             isbn=form.isbn.data,
             summary=form.summary.data,
             cover_image_url=form.cover_image_url.data
         )
         db.session.add(book)
         db.session.commit()
-        flash('The book has been added.')
-        return redirect(url_for('books'))
+
+        for category_id in form.categories.data:
+            book_category = BookCategory(book_id=book.book_id, category_id=category_id)
+            db.session.add(book_category)
+        
+        db.session.commit()
+        flash('Book added successfully!', 'success')
+        return redirect(url_for('add_book'))
+    
     return render_template('add_book.html', form=form)
 
 if __name__ == '__main__':
