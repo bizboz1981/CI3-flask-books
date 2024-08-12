@@ -38,7 +38,7 @@ class Book(db.Model):
     summary = db.Column(db.Text)
     cover_image_url = db.Column(db.String(255))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-
+    
     reviews = db.relationship('Review', backref='book', lazy=True)
     categories = db.relationship('BookCategory', backref='book', lazy=True)
     
@@ -51,7 +51,7 @@ class Review(db.Model):
     rating = db.Column(db.Integer, nullable=False)
     review_text = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-
+    
     review_votes = db.relationship('ReviewVote', backref='review', lazy=True)
 
 class Category(db.Model):
