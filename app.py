@@ -5,8 +5,9 @@ from forms import RegistrationForm, LoginForm, ReviewForm, BookForm
 from datetime import datetime, timezone
 from flask_login import login_user, logout_user, current_user, login_required, LoginManager, login_manager
 from flask import Flask, render_template, abort, redirect, url_for, flash # type: ignore
-from flask_sqlalchemy import SQLAlchemy
 from functools import wraps
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 
 app = Flask(__name__)
 
@@ -20,6 +21,19 @@ app.config['SECRET_KEY'] = secret_key
 # Initialize the database
 db.init_app(app)
 migrate.init_app(app, db)
+
+# Initialize Flask-Admin
+admin = Admin(app, name='Admin Portal', template_mode='bootstrap3')
+
+# Protect the admin portal
+class AdminModelView(ModelView):
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.role == 'admin'
+
+# Add models to the admin interface
+admin.add_view(AdminModelView(Book, db.session))
+admin.add_view(AdminModelView(Review, db.session))
+admin.add_view(AdminModelView(User, db.session))
 
 def admin_required(f):
     @wraps(f)
