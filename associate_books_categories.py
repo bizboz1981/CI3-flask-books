@@ -1,5 +1,10 @@
-from app import app, db
+import os
+from app import app
 from models import Book, Category, BookCategory
+from extensions import db
+
+# Ensure the instance path is set correctly
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(app.instance_path, 'books.db')
 
 # Define associations between books and categories
 book_categories = {
@@ -55,14 +60,22 @@ book_categories = {
 
 # Push an application context
 with app.app_context():
-    for book_title, category_names in book_categories.items():
+    for book_title, categories in book_categories.items():
+        # Get the book object
         book = Book.query.filter_by(title=book_title).first()
+
         if book:
-            for category_name in category_names:
+            for category_name in categories:
+                # Get the category object
                 category = Category.query.filter_by(category_name=category_name).first()
+
                 if category:
-                    book_category = BookCategory(book_id=book.book_id, category_id=category.category_id)
-                    db.session.add(book_category)
-    
+                    # Check if the association already exists
+                    existing_association = db.session.query(BookCategory).filter_by(book_id=book.book_id, category_id=category.category_id).first()
+                    if not existing_association:
+                        # Add the association if it doesn't exist
+                        new_association = BookCategory(book_id=book.book_id, category_id=category.category_id)
+                        db.session.add(new_association)
+
     db.session.commit()
-    print("Books and categories associated successfully!")
+    print("Book-category associations added successfully!")
