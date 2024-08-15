@@ -17,7 +17,6 @@ class User(UserMixin, db.Model):
     reviews = db.relationship('Review', backref='user', lazy=True)
     review_votes = db.relationship('ReviewVote', backref='user', lazy=True)
     authentication = db.relationship('Authentication', backref='user', lazy=True, uselist=False)
-    password_hash = db.Column(db.String(128))
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -82,3 +81,4 @@ class Authentication(db.Model):
     auth_token = db.Column(db.String(255), unique=True, nullable=False)
     expires_at = db.Column(db.DateTime, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
