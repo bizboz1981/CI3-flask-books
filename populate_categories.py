@@ -1,5 +1,9 @@
+import os
 from app import app, db
 from models import Category
+
+# Ensure the instance path is set correctly
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(app.instance_path, 'books.db')
 
 # List of categories to add
 categories = [
