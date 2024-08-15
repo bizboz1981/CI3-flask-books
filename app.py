@@ -4,8 +4,9 @@ from models import Book, Review, Category, BookCategory, ReviewVote, User, Authe
 from forms import RegistrationForm, LoginForm, ReviewForm, BookForm
 from datetime import datetime, timezone
 from flask_login import login_user, logout_user, current_user, login_required, LoginManager, login_manager
-from flask import Flask, render_template, request, redirect, url_for, flash # type: ignore
+from flask import Flask, render_template, abort, redirect, url_for, flash # type: ignore
 from flask_sqlalchemy import SQLAlchemy
+from functools import wraps
 
 app = Flask(__name__)
 
@@ -20,6 +21,14 @@ app.config['SECRET_KEY'] = secret_key
 db.init_app(app)
 migrate.init_app(app, db)
 
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_authenticated or current_user.role != 'admin':
+            abort(403)
+        return f(*args, **kwargs)
+    return decorated_function
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -29,6 +38,7 @@ def about():
     return render_template('about.html')
 
 @app.route('/bootstrap')
+@admin_required
 def bootstrap():
     return render_template('bootstrap.html')
 
@@ -66,7 +76,8 @@ def register():
             username=form.username.data,
             email=form.email.data,
             profile_picture_url=form.profile_picture_url.data,
-            created_at = datetime.now(timezone.utc)
+            created_at=datetime.now(timezone.utc),
+            role='admin' if form.email.data.endswith('@admin.com') else 'regular'
         )
         user.set_password(form.password.data)
         db.session.add(user)
