@@ -1,6 +1,6 @@
 import os
 from app import app
-from models import Book, Category, book_categories
+from models import Book
 from extensions import db
 
 # Ensure the instance path is set correctly
