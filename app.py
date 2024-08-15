@@ -3,7 +3,7 @@ from extensions import db, migrate
 from models import Book, Review, Category, BookCategory, ReviewVote, User, Authentication
 from forms import RegistrationForm, LoginForm, ReviewForm, BookForm
 from datetime import datetime, timezone
-from flask_login import login_user, logout_user, current_user, login_required, LoginManager, login_manager
+from flask_login import login_user, logout_user, current_user, login_required, LoginManager
 from flask import Flask, render_template, abort, redirect, url_for, flash # type: ignore
 from functools import wraps
 from flask_admin import Admin
@@ -34,6 +34,10 @@ class AdminModelView(ModelView):
 admin.add_view(AdminModelView(Book, db.session))
 admin.add_view(AdminModelView(Review, db.session))
 admin.add_view(AdminModelView(User, db.session))
+admin.add_view(AdminModelView(Category, db.session))
+admin.add_view(AdminModelView(ReviewVote, db.session))
+admin.add_view(AdminModelView(Authentication, db.session))
+
 
 def admin_required(f):
     @wraps(f)
