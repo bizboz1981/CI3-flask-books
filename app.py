@@ -28,6 +28,10 @@ def home():
 def about():
     return render_template('about.html')
 
+@app.route('/bootstrap')
+def bootstrap():
+    return render_template('bootstrap.html')
+
 @app.route('/books')
 def books():
     all_books = Book.query.all()
