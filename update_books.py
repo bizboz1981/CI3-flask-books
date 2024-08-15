@@ -1,6 +1,10 @@
+import os
 from app import app
-from models import Book
+from models import Book, Category, book_categories
 from extensions import db
+
+# Ensure the instance path is set correctly
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(app.instance_path, 'books.db')
 
 # data to update the books
 book_details = [
