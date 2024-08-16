@@ -1,6 +1,22 @@
+body {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc; 
+    box-sizing: border-box;
+}
+
 #book_cover {
     width: 200px;
     height: 300px;
     margin: 10px;
-    /* float: left; */
+}
+
+
+#title, #author, #published_date, #isbn, #summary, #categories, #cover_image_url {
+    margin-bottom: 15px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
 }

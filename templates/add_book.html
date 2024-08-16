@@ -4,19 +4,19 @@
 <form method="POST" action="{{ url_for('add_book') }}">
     {{ form.hidden_tag() }}
     {{ form.title.label }}<br>
-    {{ form.title(size=32) }}<br>
+    {{ form.title(class_='form-control', id='title') }}<br>
     {{ form.author.label }}<br>
-    {{ form.author(size=32) }}<br>
+    {{ form.author(class_='form-control', id='author') }}<br>
     {{ form.published_date.label }}<br>
-    {{ form.published_date() }}<br>
+    {{ form.published_date(class_='form-control', id='published_date') }}<br>
     {{ form.isbn.label }}<br>
-    {{ form.isbn(size=32) }}<br>
+    {{ form.isbn(class_='form-control', id='isbn') }}<br>
     {{ form.summary.label }}<br>
-    {{ form.summary(rows=5, cols=40) }}<br>
+    {{ form.summary(class_='form-control', id='summary', rows=5, cols=40) }}<br>
     {{ form.categories.label }}<br>
-    {{ form.categories(size=32) }}<br>
+    {{ form.categories(class_='form-control', id='categories') }}<br>
     {{ form.cover_image_url.label }}<br>
-    {{ form.cover_image_url(size=32) }}<br>
-    {{ form.submit() }}
+    {{ form.cover_image_url(class_='form-control', id='cover_image_url') }}<br>
+    {{ form.submit(class_='btn btn-primary') }}
 </form>
 {% endblock %}
