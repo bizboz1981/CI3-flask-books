@@ -2,7 +2,7 @@
 {% block content %}
 <h2>{{ book.title }}</h2>
 <p>Author: {{ book.author }}</p>
-<img id="book_cover" src="../static/assets/img/book_cover.jpeg">
+<img id="book_cover" src="{{ url_for('static', filename='assets/img/' + book.title.lower().replace(' ', '_') + '.jpeg') }}">
 <p>Categories: 
     {% for book_category in book.categories %}
         {{ book_category.category.category_name }}{% if not loop.last %}, {% endif %}
