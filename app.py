@@ -1,7 +1,7 @@
 import os
 from extensions import db, migrate
 from models import Book, Review, Category, BookCategory, ReviewVote, User
-from forms import RegistrationForm, LoginForm, ReviewForm, BookForm
+from forms import RegistrationForm, LoginForm, ReviewForm, BookForm, ReviewVoteForm
 from datetime import datetime, timezone
 from flask_login import login_user, logout_user, current_user, login_required, LoginManager
 from flask import Flask, render_template, abort, redirect, url_for, flash # type: ignore
@@ -183,6 +183,7 @@ def create_app():
             return redirect(url_for('add_book'))
         
         return render_template('add_book.html', form=form)
+    
     return app
 
 if __name__ == '__main__':
