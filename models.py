@@ -37,8 +37,8 @@ class Book(db.Model):
     cover_image_url = db.Column(db.String(255))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
-    reviews = db.relationship('Review', backref='book', lazy=True)
-    categories = db.relationship('BookCategory', backref='book', lazy=True)
+    reviews = db.relationship('Review', backref='book', lazy=True, cascade="all, delete-orphan")
+    categories = db.relationship('BookCategory', backref='book', lazy=True, cascade='all, delete-orphan')
     
 
 class Review(db.Model):
@@ -50,7 +50,7 @@ class Review(db.Model):
     review_text = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
-    review_votes = db.relationship('ReviewVote', backref='review', lazy=True)
+    review_votes = db.relationship('ReviewVote', backref='review', lazy=True, cascade="all, delete-orphan")
 
 class Category(db.Model):
     __tablename__ = 'categories'
@@ -61,7 +61,7 @@ class Category(db.Model):
 
 class BookCategory(db.Model):
     __tablename__ = 'book_categories'
-    book_id = db.Column(db.Integer, db.ForeignKey('books.book_id'), primary_key=True, nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.book_id', ondelete='CASCADE'), primary_key=True, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.category_id'), primary_key=True, nullable=False)
 
 class ReviewVote(db.Model):
