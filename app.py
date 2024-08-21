@@ -1,6 +1,6 @@
 import os
 from extensions import db, migrate
-from models import Book, Review, Category, BookCategory, ReviewVote, User, Authentication
+from models import Book, Review, Category, BookCategory, ReviewVote, User
 from forms import RegistrationForm, LoginForm, ReviewForm, BookForm
 from datetime import datetime, timezone
 from flask_login import login_user, logout_user, current_user, login_required, LoginManager
@@ -36,7 +36,6 @@ admin.add_view(AdminModelView(Review, db.session))
 admin.add_view(AdminModelView(User, db.session))
 admin.add_view(AdminModelView(Category, db.session))
 admin.add_view(AdminModelView(ReviewVote, db.session))
-admin.add_view(AdminModelView(Authentication, db.session))
 
 
 def admin_required(f):
