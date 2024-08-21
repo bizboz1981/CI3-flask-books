@@ -14,7 +14,6 @@ class User(UserMixin, db.Model):
     role = db.Column(db.String(50), nullable=False, default='regular')
 
     reviews = db.relationship('Review', backref='user', lazy=True)
-    review_votes = db.relationship('ReviewVote', backref='user', lazy=True)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -49,8 +48,6 @@ class Review(db.Model):
     rating = db.Column(db.Integer, nullable=False)
     review_text = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
-    review_votes = db.relationship('ReviewVote', backref='review', lazy=True, cascade="all, delete-orphan")
 
 class Category(db.Model):
     __tablename__ = 'categories'
@@ -63,11 +60,3 @@ class BookCategory(db.Model):
     __tablename__ = 'book_categories'
     book_id = db.Column(db.Integer, db.ForeignKey('books.book_id', ondelete='CASCADE'), primary_key=True, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.category_id'), primary_key=True, nullable=False)
-
-class ReviewVote(db.Model):
-    __tablename__ = 'review_votes'
-    vote_id = db.Column(db.Integer, primary_key=True)
-    review_id = db.Column(db.Integer, db.ForeignKey('reviews.review_id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
-    vote_type = db.Column(db.String(10), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)

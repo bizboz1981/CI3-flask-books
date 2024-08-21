@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, URLField, TextAreaField, SelectMultipleField, SelectField
+from wtforms import StringField, PasswordField, SubmitField, URLField, TextAreaField, SelectMultipleField, widgets
 from wtforms.validators import DataRequired, Email, EqualTo, Optional, URL, NumberRange, Length
 from wtforms import BooleanField, IntegerField
 from models import Category
@@ -31,7 +31,7 @@ class BookForm(FlaskForm):
     summary = StringField('Summary', validators=[DataRequired()])
     cover_image_url = StringField('Cover Image URL')
     
-    categories = SelectMultipleField('Categories', coerce=int)
+    categories = SelectMultipleField('Categories', coerce=int, option_widget=widgets.CheckboxInput())
     
     submit = SubmitField('Add Book')
 
