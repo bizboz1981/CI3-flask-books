@@ -4,7 +4,7 @@ from models import Book, Review, Category, BookCategory, User
 from forms import RegistrationForm, LoginForm, ReviewForm, BookForm
 from datetime import datetime, timezone
 from flask_login import login_user, logout_user, current_user, login_required, LoginManager
-from flask import Flask, render_template, abort, redirect, url_for, flash # type: ignore
+from flask import Flask, render_template, abort, redirect, url_for, flash, request # type: ignore
 from functools import wraps
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
@@ -61,7 +61,14 @@ def create_app():
 
     @app.route('/books')
     def books():
-        all_books = Book.query.all()
+        query = request.args.get('q', '')
+        if query:
+            all_books = Book.query.filter(
+                (Book.title.ilike(f'%{query}%')) | 
+                (Book.author.ilike(f'%{query}%'))
+            ).all()
+        else:
+            all_books = Book.query.all()
         return render_template('books.html', books=all_books)
 
     @app.route('/book/<int:book_id>', methods=['GET', 'POST'])
