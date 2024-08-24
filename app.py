@@ -48,7 +48,15 @@ def create_app():
 
     @app.route('/')
     def home():
-        return render_template('index.html')
+        query = request.args.get('q', '')
+        if query:
+            all_books = Book.query.filter(
+                (Book.title.ilike(f'%{query}%')) | 
+                (Book.author.ilike(f'%{query}%'))
+            ).all()
+        else:
+            all_books = Book.query.all()
+        return render_template('index.html', books=all_books)
 
     @app.route('/about')
     def about():
@@ -59,17 +67,17 @@ def create_app():
     def bootstrap():
         return render_template('bootstrap.html')
 
-    @app.route('/books')
-    def books():
-        query = request.args.get('q', '')
-        if query:
-            all_books = Book.query.filter(
-                (Book.title.ilike(f'%{query}%')) | 
-                (Book.author.ilike(f'%{query}%'))
-            ).all()
-        else:
-            all_books = Book.query.all()
-        return render_template('books.html', books=all_books)
+    # @app.route('/books')
+    # def books():
+    #     query = request.args.get('q', '')
+    #     if query:
+    #         all_books = Book.query.filter(
+    #             (Book.title.ilike(f'%{query}%')) | 
+    #             (Book.author.ilike(f'%{query}%'))
+    #         ).all()
+    #     else:
+    #         all_books = Book.query.all()
+    #     return render_template('books.html', books=all_books)
 
     @app.route('/book/<int:book_id>', methods=['GET', 'POST'])
     def book_detail(book_id):
