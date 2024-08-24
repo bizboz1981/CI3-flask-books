@@ -20,3 +20,37 @@ body {
     background-color: #007bff;
     border-color: #007bff;
 }
+
+.carousel-item {
+    display: none;
+    transition: transform 0.6s ease-in-out;
+}
+
+.carousel-item.active {
+    display: block;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+}
+
+.custom-carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 5%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    z-index: 10;
+}
+
+.carousel-control-prev.custom-carousel-control {
+    left: -5%;
+}
+
+.carousel-control-next.custom-carousel-control {
+    right: -5%;
+}
