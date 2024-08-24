@@ -1,7 +1,4 @@
-{% extends "base.html" %}
-{% block content %}
-<h2>Add a New Book</h2>
-<form method="POST" action="{{ url_for('add_book') }}">
+<form method="POST" action="{{ url_for('add_book') }}" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
     {{ form.title.label }}<br>
     {{ form.title(class_='form-control', id='title') }}<br>
@@ -22,6 +19,7 @@
     {% endfor %}
     {{ form.cover_image_url.label }}<br>
     {{ form.cover_image_url(class_='form-control', id='cover_image_url') }}<br>
+    <label for="cover_image">Cover Image</label><br>
+    <input type="file" name="cover_image" id="cover_image" class="form-control"><br>
     {{ form.submit(class_='btn btn-primary') }}
 </form>
-{% endblock %}

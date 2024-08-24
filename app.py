@@ -1,4 +1,4 @@
-import os
+import os, base64
 from extensions import db, migrate
 from models import Book, Review, Category, BookCategory, User
 from forms import RegistrationForm, LoginForm, ReviewForm, BookForm
@@ -10,7 +10,7 @@ from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='static')
 
     # Configuration for SQLite database
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(app.instance_path, 'books.db')
@@ -37,6 +37,9 @@ def create_app():
     admin.add_view(AdminModelView(User, db.session))
     admin.add_view(AdminModelView(Category, db.session))
 
+    @app.template_filter('b64encode')
+    def b64encode_filter(data):
+        return base64.b64encode(data).decode('utf-8')
 
     def admin_required(f):
         @wraps(f)
@@ -173,29 +176,23 @@ def create_app():
     def add_book():
         form = BookForm()
         if form.validate_on_submit():
+            cover_image_data = None
+            if 'cover_image' in request.files:
+                cover_image = request.files['cover_image']
+                if cover_image:
+                    cover_image_data = cover_image.read()
             
-            published_date_str = form.published_date.data
-            published_date = datetime.strptime(published_date_str, '%d/%m/%Y').date()
-            
-            book = Book(
+            new_book = Book(
                 title=form.title.data,
                 author=form.author.data,
-                published_date=published_date,
                 isbn=form.isbn.data,
                 summary=form.summary.data,
-                cover_image_url=form.cover_image_url.data
+                cover_image_url=form.cover_image_url.data,
+                cover_image_data=cover_image_data
             )
-            db.session.add(book)
+            db.session.add(new_book)
             db.session.commit()
-
-            for category_id in form.categories.data:
-                book_category = BookCategory(book_id=book.book_id, category_id=category_id)
-                db.session.add(book_category)
-            
-            db.session.commit()
-            flash('Book added successfully!', 'success')
-            return redirect(url_for('add_book'))
-        
+            return redirect(url_for('home'))
         return render_template('add_book.html', form=form)
     
     return app
