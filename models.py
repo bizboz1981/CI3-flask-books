@@ -35,7 +35,6 @@ class Book(db.Model):
     isbn = db.Column(db.String(13), unique=True)
     summary = db.Column(db.Text)
     cover_image_url = db.Column(db.String(255))
-    cover_image_data = Column(LargeBinary, nullable=True) 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     reviews = db.relationship('Review', backref='book', lazy=True, cascade="all, delete-orphan")
