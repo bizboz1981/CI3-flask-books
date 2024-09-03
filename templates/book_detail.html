@@ -3,12 +3,9 @@
 <h2>{{ book.title }}</h2>
 <p>Author: {{ book.author }}</p>
 
-{% set local_image_path = 'assets/img/' + book.title.lower().replace(' ', '_') + '.jpeg' %}
-{% if local_image_path in static_files %}
-    <img id="book_cover" src="{{ url_for('static', filename=local_image_path) }}" alt="Cover image of {{ book.title }}">
-{% else %}
-    <img id="book_cover" src="{{ book.cover_image_url }}" alt="Cover image of {{ book.title }}">
-{% endif %}
+<img id="book_cover" class="card-img-top" 
+     src="{{ book.cover_image_url }}" 
+     alt="Book cover of {{ book.title }}" />
 
 <p>Categories: 
     {% for book_category in book.categories %}

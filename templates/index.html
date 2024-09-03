@@ -20,8 +20,8 @@
                             <div class="card h-100">
                                 <!-- Product image-->
                                 <img id="book_cover" class="card-img-top" 
-                                     src="{{ url_for('static', filename='assets/img/' + book.title.lower().replace(' ', '_') + '.jpeg') }}" 
-                                     alt="Book cover of {{ book.title }}" />
+                                    src="{{ book.cover_image_url }}" 
+                                    alt="Book cover of {{ book.title }}" />
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
