@@ -188,7 +188,6 @@ def create_app():
                 isbn=form.isbn.data,
                 summary=form.summary.data,
                 cover_image_url=form.cover_image_url.data,
-                cover_image_data=cover_image_data
             )
             db.session.add(new_book)
             db.session.commit()
