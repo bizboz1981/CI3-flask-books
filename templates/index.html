@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% set page_title = "Home" %}
+<h1>{{ page_title }}</h1>
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5 position-relative">
         <form method="GET" action="{{ url_for('home') }}" class="mb-4">

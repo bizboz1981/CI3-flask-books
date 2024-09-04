@@ -11,6 +11,11 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+h1 {
+    font-family: 'Playfair Display', serif;
+    margin-top: 1em;
+}
+
 h2.book-title,
 h5.book-title {
     font-family: 'Playfair Display', serif;
