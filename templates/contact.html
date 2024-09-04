@@ -2,5 +2,22 @@
 {% set page_title = "Contact us" %}
 <h1>{{ page_title }}</h1>
 {% block content %}
-    
+<form method="POST" action="{{ url_for('contact') }}">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+        {{ form.name.label(class="form-label") }}
+        {{ form.name(class_='form-control') }}
+    </div>
+    <div class="mb-3">
+        {{ form.email.label(class="form-label") }}
+        {{ form.email(class_='form-control') }}
+    </div>
+    <div class="mb-3">
+        {{ form.message.label(class="form-label") }}
+        {{ form.message(class_='form-control', rows=5) }}
+    </div>
+    <div class="mb-3">
+        {{ form.submit(class_='btn btn-primary') }}
+    </div>
+</form>
 {% endblock %}
