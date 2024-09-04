@@ -23,10 +23,10 @@
     <form method="POST" action="{{ url_for('book_detail', book_id=book.book_id) }}">
         {{ form.hidden_tag() }}
         {{ form.rating.label }}<br>
-        {{ form.rating(size=32) }}<br>
+        {{ form.rating(size=32, width=50, class="input-background") }}<br>
         {{ form.review_text.label }}<br>
-        {{ form.review_text(rows=5, cols=40) }}<br>
-        {{ form.submit() }}
+        {{ form.review_text(rows=5, cols=40, class="input-background") }}<br>
+        {{ form.submit(class_='btn btn-primary') }}
     </form>
 {% else %}
     <p><a href="{{ url_for('login') }}">Log in</a> to leave a review.</p>

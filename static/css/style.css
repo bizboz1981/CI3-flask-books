@@ -1,10 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+
+
 body {
     margin: 20px;
     padding: 20px;
     border: 1px solid #ccc; 
     box-sizing: border-box;
+    background-color: blanchedalmond;
+    font-family: 'Roboto', sans-serif;
 }
 
 h2.book-title,
@@ -66,10 +70,56 @@ h5.book-title {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #F2F2F2;
 }
 
 .card-img-top {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.navbar {
+    background-color: #3F2F2F !important;
+}
+
+.nav-link {
+    color: white !important;
+}
+
+.btn {
+    background-color: #3F2F2F;
+    border-color: #3F2F2F;
+    color: white;
+}
+
+.input-background {
+    background-color: #F2F2F2;
+}
+
+form {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.categories {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.categories .form-check {
+    margin-bottom: 10px;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.form-control {
+    margin-bottom: 0px !important;
+}
+
+hr {
+    margin-top: 0 !important;
 }

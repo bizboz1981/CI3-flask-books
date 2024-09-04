@@ -1,25 +1,38 @@
-<form method="POST" action="{{ url_for('add_book') }}" enctype="multipart/form-data">
+
+{% extends "base.html" %}
+
+{% block content %}
+<form method="POST" class="form" action="{{ url_for('add_book') }}" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
-    {{ form.title.label }}<br>
+    {{ form.title.label(class="form-label") }}<br>
     {{ form.title(class_='form-control', id='title') }}<br>
-    {{ form.author.label }}<br>
+    <hr>
+    {{ form.author.label(class="form-label") }}<br>
     {{ form.author(class_='form-control', id='author') }}<br>
-    {{ form.published_date.label }}<br>
+    <hr>
+    {{ form.published_date.label(class="form-label") }}<br>
     {{ form.published_date(class_='form-control', id='published_date') }}<br>
-    {{ form.isbn.label }}<br>
+    <hr>
+    {{ form.isbn.label(class="form-label") }}<br>
     {{ form.isbn(class_='form-control', id='isbn') }}<br>
-    {{ form.summary.label }}<br>
+    <hr>
+    {{ form.summary.label(class="form-label") }}<br>
     {{ form.summary(class_='form-control', id='summary', rows=5, cols=40) }}<br>
-    {{ form.categories.label }}<br>
-    {% for subfield in form.categories %}
-        <div class="form-check">
-            {{ subfield(class_='form-check-input') }}
-            {{ subfield.label(class_='form-check-label') }}
-        </div>
-    {% endfor %}
-    {{ form.cover_image_url.label }}<br>
+    <hr>
+    {{ form.categories.label(class='categories-label form-label') }}<br>
+    <div class="categories">
+        {% for subfield in form.categories|sort(attribute='label.text') %}
+            <div class="form-check">
+                {{ subfield(class_='form-check-input') }}
+                {{ subfield.label(class_='form-check-label') }}
+            </div>
+        {% endfor %}
+    </div>
+    <hr>
+    {{ form.cover_image_url.label(class="form-label") }}<br>
     {{ form.cover_image_url(class_='form-control', id='cover_image_url') }}<br>
-    <label for="cover_image">Cover Image</label><br>
-    <input type="file" name="cover_image" id="cover_image" class="form-control"><br>
+    <hr>
     {{ form.submit(class_='btn btn-primary') }}
+
 </form>
+{% endblock %}
