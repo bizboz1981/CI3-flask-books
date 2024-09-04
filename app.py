@@ -1,13 +1,17 @@
 import os, base64
 from extensions import db, migrate
-from models import Book, Review, Category, BookCategory, User
-from forms import RegistrationForm, LoginForm, ReviewForm, BookForm
+from models import Book, Review, Category, User
+from forms import RegistrationForm, LoginForm, ReviewForm, BookForm, ContactForm
 from datetime import datetime, timezone
 from flask_login import login_user, logout_user, current_user, login_required, LoginManager
 from flask import Flask, render_template, abort, redirect, url_for, flash, request # type: ignore
 from functools import wraps
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+from dotenv import load_dotenv
+from flask_mail import Mail, Message
+
+load_dotenv()  # Load environment variables from .env file
 
 def create_app():
     app = Flask(__name__, static_folder='static')
@@ -15,9 +19,8 @@ def create_app():
     # Configuration for SQLite database
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(app.instance_path, 'books.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    # Generate a secret key
-    secret_key = '+$2At1z~QE7_^7il`'
-    app.config['SECRET_KEY'] = secret_key
+    # get secret key
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
     # Initialize the database
     db.init_app(app)
@@ -48,6 +51,15 @@ def create_app():
                 abort(403)
             return f(*args, **kwargs)
         return decorated_function
+    
+    # Configure Flask-Mail
+    app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')
+    app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT'))
+    app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS') == 'True'
+    app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+    app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+
+    mail = Mail(app)
 
     @app.route('/')
     def home():
@@ -70,18 +82,6 @@ def create_app():
     def bootstrap():
         return render_template('bootstrap.html')
 
-    # @app.route('/books')
-    # def books():
-    #     query = request.args.get('q', '')
-    #     if query:
-    #         all_books = Book.query.filter(
-    #             (Book.title.ilike(f'%{query}%')) | 
-    #             (Book.author.ilike(f'%{query}%'))
-    #         ).all()
-    #     else:
-    #         all_books = Book.query.all()
-    #     return render_template('books.html', books=all_books)
-
     @app.route('/book/<int:book_id>', methods=['GET', 'POST'])
     def book_detail(book_id):
         book = Book.query.get_or_404(book_id)
@@ -98,10 +98,6 @@ def create_app():
             flash('Your review has been added.')
             return redirect(url_for('book_detail', book_id=book.book_id))
         return render_template('book_detail.html', book=book, form=form)
-
-    @app.route('/contact')
-    def contact():
-        return render_template('contact.html')
 
     @app.route('/register', methods=['GET', 'POST'])
     def register():
@@ -175,13 +171,7 @@ def create_app():
     @app.route('/add_book', methods=['GET', 'POST'])
     def add_book():
         form = BookForm()
-        if form.validate_on_submit():
-            cover_image_data = None
-            if 'cover_image' in request.files:
-                cover_image = request.files['cover_image']
-                if cover_image:
-                    cover_image_data = cover_image.read()
-            
+        if form.validate_on_submit():            
             new_book = Book(
                 title=form.title.data,
                 author=form.author.data,
@@ -193,7 +183,23 @@ def create_app():
             db.session.commit()
             return redirect(url_for('home'))
         return render_template('add_book.html', form=form)
-    
+
+    @app.route('/contact', methods=['GET', 'POST'])
+    def contact():
+        form = ContactForm()
+        if form.validate_on_submit():
+            msg = Message('New Contact Form Submission',
+                        sender=os.getenv('MAIL_USERNAME'),
+                        recipients=['willjsaunders@icloud.com'])
+            msg.body = f"""
+            From: {form.name.data} <{form.email.data}>
+            Message: {form.message.data}
+            """
+            mail.send(msg)
+            flash('Your message has been sent successfully!', 'success')
+            return redirect(url_for('contact'))
+        return render_template('contact.html', form=form)
+        
     return app
 
 if __name__ == '__main__':
