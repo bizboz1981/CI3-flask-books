@@ -20,7 +20,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(app.instance_path, 'books.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     # get secret key
-    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+    app.config['SECRET_KEY'] = "+$2At1z~QE7_^7il`"
 
     # Initialize the database
     db.init_app(app)
