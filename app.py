@@ -53,14 +53,14 @@ def create_app():
             return f(*args, **kwargs)
         return decorated_function
     
-    # Configure Flask-Mail
-    app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')
-    app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT'))
-    app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS') == 'True'
-    app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
-    app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+    # # Configure Flask-Mail
+    # app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')
+    # app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT'))
+    # app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS') == 'True'
+    # app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+    # app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
 
-    mail = Mail(app)
+    # mail = Mail(app)
 
     @app.route('/')
     def home():

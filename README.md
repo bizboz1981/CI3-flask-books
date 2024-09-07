@@ -1,28 +1,121 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# CI3 Flask Books Application
 
-Welcome William Saunders,
+Link to live project: [CI3 Flask Books](https://github.com/bizboz1981/CI3-flask-books)
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+## Table of Contents
+- [Project Background & Summary](#project-background--summary)
+- [User Experience (UX)](#user-experience-ux)
+- [Features & Structure](#features--structure)
+- [Design](#design)
+- [Technologies Used](#technologies-used)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [Credits](#credits)
+- [References & Resources Used](#references--resources-used)
 
-You can safely delete this README.md file or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **June 18, 2024**
+## Project Background & Summary
+This project is a Flask-based book management system. The motivation behind this project was to provide a user-friendly application for managing books, tracking authors, and maintaining user records. It aims to merge the power of Flask as a Python micro-framework with a clean and intuitive frontend, making book management simple and efficient. By leveraging RESTful API architecture and database interactions, the application demonstrates the ease of CRUD (Create, Read, Update, Delete) operations with Flask.
 
-## Gitpod Reminders
+The project provides a simple interface where users can view, add, edit, or delete book records and associate them with authors. This is designed to be flexible enough for expansion and suitable for different types of users, from avid readers to book clubs.
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+## User Experience (UX)
+### User Stories
+#### First Time Visitor Goals
+1. As a First Time Visitor, I want to easily understand the purpose of the application and how to navigate through it.
+2. As a First Time Visitor, I want to be able to search for books and see the details.
+3. As a First Time Visitor, I want a simple way to add or manage books in the system.
 
-`python3 -m http.server`
+#### Returning Visitor Goals
+1. As a Returning Visitor, I want to easily find the books I have previously added.
+2. As a Returning Visitor, I want to update or delete records with ease.
+3. As a Returning Visitor, I want to stay informed about any new updates to the platform.
 
-A blue button should appear to click: _Make Public_,
+#### Frequent Visitor Goals
+1. As a Frequent Visitor, I want to see all book records displayed in an organized manner.
+2. As a Frequent Visitor, I want to ensure that the system functions smoothly with all its features, including book and author management.
+3. As a Frequent Visitor, I want to access the system without any technical errors or bugs.
 
-Another blue button should appear to click: _Open Browser_.
+## Features & Structure
+### Existing Features
+- **Homepage & Navigation**: The homepage provides users with a clean and simple interface, displaying the list of books and a navigation menu for easy access.
+- **Book Listing**: Users can view a list of books with details such as title, author, and published year. Clicking on a book title allows the user to view more detailed information.
+- **Add/Edit/Delete Book**: Users can add new books, update the details of a book, or delete a book from the system.
+- **Author Management**: Manage author details and associate books with specific authors.
+- **User Authentication**: Authentication ensures that only registered users can access full functionality, such as adding or editing book records.
+- **Search Functionality**: A search bar allows users to quickly find books by title or author.
 
-To run a backend Python file, type `python3 app.py` if your Python file is named `app.py`, of course.
+### Future Features
+- Add user profiles for personal book collections.
+- Integrate a review system where users can rate and review books.
+- Implement borrowing/loan tracking.
+- Add email notifications for book updates or new entries.
 
-A blue button should appear to click: _Make Public_,
+## Design
+### Wireframes
+The wireframes are designed to be simple, with a focus on usability. The layout is clean, ensuring users can easily navigate and manage entries.
 
-Another blue button should appear to click: _Open Browser_.
+### Colour Scheme
+The application uses neutral colors, such as blues and greys, to maintain a professional and functional appearance, without unnecessary distractions.
 
-By Default, Gitpod gives you superuser security privileges. Therefore, you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+## Technologies Used
+### Languages
+- Python (Flask framework)
+- HTML5
+- CSS3
+- JavaScript (for frontend interactivity)
+
+### Applications
+- Git - for version control.
+- GitHub - for version control and hosting.
+- Visual Studio Code - for developing the project.
+
+### Frameworks, Libraries & Tools
+- Flask - The primary backend framework.
+- Jinja2 - For templating in HTML.
+- SQLite - The database system used.
+- Bootstrap - For responsive and mobile-friendly design.
+
+### Other Tech & VS Code Extensions
+- [Flask Debug Toolbar](https://flask-debugtoolbar.readthedocs.io/) - for debugging and testing.
+- [Postman](https://www.postman.com/) - for API testing.
+- [Prettier](https://prettier.io) - for code formatting.
+
+### Learning Resources
+- [Flask Documentation](https://flask.palletsprojects.com/en/2.0.x/) - for backend guidance.
+- [W3Schools](https://www.w3schools.com) - for frontend and design inspiration.
+- [Stack Overflow](https://stackoverflow.com) - for troubleshooting issues.
+
+## Testing
+Extensive manual testing has been carried out to ensure all CRUD operations, form validations, and database interactions work correctly.
+
+### Features Testing
+| Feature             | Test Case                               | Outcome                                     |
+| ------------------- | --------------------------------------- | ------------------------------------------- |
+| Book Search         | Search for a book by title or author    | Search results display correct entries      |
+| Add New Book        | Add a new book to the collection        | Book is successfully added and displayed    |
+| Edit Book Details   | Edit the details of an existing book    | Updates are saved and reflected immediately |
+| Delete Book         | Delete a book from the collection       | Book is successfully deleted                |
+| Author Management   | Add or edit an author                   | Author details are saved and associated     |
+
+### Browser Testing
+| Browser             | Compatibility | Responsiveness | Issues   |
+| ------------------- | ------------- | -------------- | -------- |
+| Chrome              | Good          | Good           | None     |
+| Firefox             | Good          | Good           | None     |
+| Safari              | Good          | Good           | None     |
+| Edge                | Good          | Good           | None     |
+
+### Online Validation Services
+- **HTML Validator**: Validated with no errors.
+- **CSS Validator**: Passed with no significant issues.
+- **Flask Debugging**: Used Flask's built-in debugger to resolve any backend issues.
+
+## Deployment
+The application is deployed on GitHub Pages for frontend hosting. You can also deploy the Flask backend using Heroku.
+
+### Steps to Deploy:
+1. Fork the repository from [GitHub](https://github.com/bizboz1981/CI3-flask-books).
+2. Clone the repository to your local machine: 
 
 To log into the Heroku toolbelt CLI:
 
