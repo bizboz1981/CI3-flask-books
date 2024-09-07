@@ -61,3 +61,11 @@ class BookCategory(db.Model):
     __tablename__ = 'book_categories'
     book_id = db.Column(db.Integer, db.ForeignKey('books.book_id', ondelete='CASCADE'), primary_key=True, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.category_id'), primary_key=True, nullable=False)
+
+class ContactMessage(db.Model):
+    __tablename__ = 'contact_messages' # Ensure the table name matches the database
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    message = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, default=db.func.current_timestamp(), nullable=False)

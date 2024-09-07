@@ -1,6 +1,6 @@
 import os, base64
 from extensions import db, migrate
-from models import Book, Review, Category, User
+from models import Book, Review, Category, User, ContactMessage
 from forms import RegistrationForm, LoginForm, ReviewForm, BookForm, ContactForm
 from datetime import datetime, timezone
 from flask_login import login_user, logout_user, current_user, login_required, LoginManager
@@ -39,6 +39,7 @@ def create_app():
     admin.add_view(AdminModelView(Review, db.session))
     admin.add_view(AdminModelView(User, db.session))
     admin.add_view(AdminModelView(Category, db.session))
+    admin.add_view(AdminModelView(ContactMessage, db.session))
 
     @app.template_filter('b64encode')
     def b64encode_filter(data):
@@ -188,14 +189,13 @@ def create_app():
     def contact():
         form = ContactForm()
         if form.validate_on_submit():
-            msg = Message('New Contact Form Submission',
-                        sender=os.getenv('MAIL_USERNAME'),
-                        recipients=['willjsaunders@icloud.com'])
-            msg.body = f"""
-            From: {form.name.data} <{form.email.data}>
-            Message: {form.message.data}
-            """
-            mail.send(msg)
+            new_message = ContactMessage(
+                name=form.name.data,
+                email=form.email.data,
+                message=form.message.data
+            )
+            db.session.add(new_message)
+            db.session.commit()
             flash('Your message has been sent successfully!', 'success')
             return redirect(url_for('contact'))
         return render_template('contact.html', form=form)
