@@ -1,34 +1,47 @@
 {% extends "base.html" %}
 {% block content %}
-<h2 class="book-title">{{ book.title }}</h2>
-<p>Author: {{ book.author }}</p>
-
-<img id="book_cover" class="card-img-top" 
-     src="{{ book.cover_image_url }}" 
-     alt="Book cover of {{ book.title }}" />
-
-<p>Categories: 
-    {% for book_category in book.categories %}
-        {{ book_category.category.category_name }}{% if not loop.last %}, {% endif %}
-    {% endfor %}
-</p>
-<h3>Reviews</h3>
-<ul>
-    {% for review in book.reviews %}
-        <li>{{ review.rating }} stars - {{ review.review_text }} - {{ review.user.username }}</li>
-    {% endfor %}
-</ul>
-{% if current_user.is_authenticated %}
-    <h3>Leave a Review</h3>
-    <form method="POST" action="{{ url_for('book_detail', book_id=book.book_id) }}">
-        {{ form.hidden_tag() }}
-        {{ form.rating.label }}<br>
-        {{ form.rating(size=32, width=50, class="input-background") }}<br>
-        {{ form.review_text.label }}<br>
-        {{ form.review_text(rows=5, cols=40, class="input-background") }}<br>
-        {{ form.submit(class_='btn btn-primary') }}
-    </form>
-{% else %}
-    <p><a href="{{ url_for('login') }}">Log in</a> to leave a review.</p>
-{% endif %}
+<div class="container">
+    <div class="row justify-content-center">
+        <!-- Left Column: Book Details and Review Form -->
+        <div class="col-12 col-lg-5">
+            <h2 class="book-title">{{ book.title }}</h2>
+            <p>Author: {{ book.author }}</p>
+            <img id="book_cover" class="card-img-top" 
+                 src="{{ book.cover_image_url }}" 
+                 alt="Book cover of {{ book.title }}" />
+            <p>Categories: 
+                {% for book_category in book.categories %}
+                    {{ book_category.category.category_name }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+            {% if current_user.is_authenticated %}
+                <h3>Leave a Review</h3>
+                <form method="POST" action="{{ url_for('book_detail', book_id=book.book_id) }}">
+                    {{ form.hidden_tag() }}
+                    {{ form.rating.label }}<br>
+                    {{ form.rating(size=32, width=50, class="input-background") }}<br>
+                    {{ form.review_text.label }}<br>
+                    {{ form.review_text(rows=5, cols=40, class="input-background") }}<br>
+                    {{ form.submit(class_='btn btn-primary') }}
+                </form>
+            {% else %}
+                <p><a href="{{ url_for('login') }}">Log in</a> to leave a review.</p>
+            {% endif %}
+        </div>
+        <!-- Right Column: Reviews -->
+        <div class="col-12 col-lg-3">
+            <h3>Reviews</h3>
+            <ul>
+                {% for review in book.reviews %}
+                    <li>
+                        {{ review.rating }} stars - {{ review.review_text }} - {{ review.user.username }}
+                        {% if not loop.last %}
+                            <hr style="border: 1px solid #4c4c4c;">
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}
