@@ -49,6 +49,10 @@ class Review(db.Model):
     rating = db.Column(db.Integer, nullable=False)
     review_text = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    @property
+    def book_title(self):
+        return self.book.title if self.book else 'N/A'
 
 class Category(db.Model):
     __tablename__ = 'categories'

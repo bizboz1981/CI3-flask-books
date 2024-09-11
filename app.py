@@ -26,9 +26,14 @@ def create_app():
     # Initialize the database
     db.init_app(app)
     migrate.init_app(app, db)
+    
+    # define admin class
+    class ReviewAdmin(ModelView):
+        column_list = ('review_id', 'book_title', 'user_id', 'rating', 'review_text', 'created_at')
 
     # Initialize Flask-Admin
     admin = Admin(app, name='Admin Portal', template_mode='bootstrap3')
+    admin.add_view(ReviewAdmin(Review, db.session, name='ReviewAdmin'))
 
     # Protect the admin portal
     class AdminModelView(ModelView):
@@ -36,11 +41,10 @@ def create_app():
             return current_user.is_authenticated and current_user.role == 'admin'
 
     # Add models to the admin interface
-    admin.add_view(AdminModelView(Book, db.session))
-    admin.add_view(AdminModelView(Review, db.session))
-    admin.add_view(AdminModelView(User, db.session))
-    admin.add_view(AdminModelView(Category, db.session))
-    admin.add_view(AdminModelView(ContactMessage, db.session))
+    admin.add_view(AdminModelView(Book, db.session, name='BookAdmin'))
+    admin.add_view(AdminModelView(User, db.session, name='UserAdmin'))
+    admin.add_view(AdminModelView(Category, db.session, name='CategoryAdmin'))
+    admin.add_view(AdminModelView(ContactMessage, db.session, name='ContactMessageAdmin'))
 
     @app.template_filter('b64encode')
     def b64encode_filter(data):
