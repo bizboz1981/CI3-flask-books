@@ -84,6 +84,7 @@ def create_app():
     def bootstrap():
         return render_template('bootstrap.html')
 
+
     @app.route('/book/<int:book_id>', methods=['GET', 'POST'])
     def book_detail(book_id):
         book = Book.query.get_or_404(book_id)

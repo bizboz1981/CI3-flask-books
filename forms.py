@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, URLField, TextAreaField, SelectMultipleField, widgets
-from wtforms.validators import DataRequired, Email, EqualTo, Optional, URL, NumberRange, Length
+from wtforms import StringField, PasswordField, SubmitField, URLField, TextAreaField, SelectMultipleField, widgets, HiddenField
+from wtforms.validators import DataRequired, Email, EqualTo, Optional, URL, NumberRange, Length, ValidationError
 from wtforms import BooleanField, IntegerField
 from models import Category
 
@@ -19,9 +19,17 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Sign Up')
     
 class ReviewForm(FlaskForm):
-    rating = IntegerField('Rating', validators=[DataRequired(), NumberRange(min=1, max=5)])
+    rating = HiddenField('Rating', validators=[DataRequired()])
     review_text = TextAreaField('Review', validators=[Optional()])
     submit = SubmitField('Submit Review')
+
+    def validate_rating(self, field):
+        try:
+            field.data = int(field.data)
+        except ValueError:
+            raise ValidationError('Rating must be an integer.')
+        if not (1 <= field.data <= 5):
+            raise ValidationError('Rating must be between 1 and 5.')
 
 class BookForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
