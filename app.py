@@ -1,4 +1,5 @@
-import os, base64
+import os
+import base64
 from extensions import db, migrate
 from models import Book, Review, Category, User, ContactMessage
 from forms import RegistrationForm, LoginForm, ReviewForm, BookForm, ContactForm
