@@ -15,6 +15,9 @@
                 {% endfor %}
             </p>
             <p>Summary: {{  book.summary  }}</p>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('update_book_description', book_id=book.book_id) }}" class="btn btn-secondary">Update Description</a>
+            {% endif %}
             <p>Published: {{ book.published_date }}</p>
             {% if current_user.is_authenticated %}
                 <h3>Leave a Review</h3>
