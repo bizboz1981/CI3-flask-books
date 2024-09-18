@@ -2,7 +2,7 @@ import os
 import base64
 from extensions import db, migrate
 from models import Book, Review, Category, User, ContactMessage
-from forms import RegistrationForm, LoginForm, ReviewForm, BookForm, ContactForm
+from forms import RegistrationForm, LoginForm, ReviewForm, BookForm, ContactForm, UpdateBookDescriptionForm
 from datetime import datetime, timezone
 from flask_login import login_user, logout_user, current_user, login_required, LoginManager
 from flask import Flask, render_template, abort, redirect, url_for, flash, request # type: ignore
@@ -58,14 +58,6 @@ def create_app():
             return f(*args, **kwargs)
         return decorated_function
     
-    # # Configure Flask-Mail
-    # app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')
-    # app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT'))
-    # app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS') == 'True'
-    # app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
-    # app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
-
-    # mail = Mail(app)
 
     @app.route('/')
     def home():
@@ -190,6 +182,24 @@ def create_app():
             db.session.commit()
             return redirect(url_for('home'))
         return render_template('add_book.html', form=form)
+
+    @app.route('/book/<int:book_id>/update_description', methods=['GET', 'POST'])
+    @login_required
+    def update_book_description(book_id):
+        book = Book.query.get_or_404(book_id)
+        form = UpdateBookDescriptionForm()
+
+        if form.validate_on_submit():
+            book.summary = form.description.data
+            db.session.commit()
+            flash('Book description updated successfully!', 'success')
+            return redirect(url_for('book_detail', book_id=book_id))
+
+        # Pre-populate the form with the existing description
+        if request.method == 'GET':
+            form.description.data = book.summary
+        
+        return render_template('update_book_description.html', form=form, book=book)
 
     @app.route('/contact', methods=['GET', 'POST'])
     def contact():
