@@ -46,6 +46,10 @@ class BookForm(FlaskForm):
     def __init__(self, *args, **kwargs):
         super(BookForm, self).__init__(*args, **kwargs)
         self.categories.choices = [(category.category_id, category.category_name) for category in Category.query.all()]
+        
+class UpdateBookDescriptionForm(FlaskForm):
+    description = TextAreaField('Description', validators=[DataRequired()])
+    submit = SubmitField('Update Description')
 
 class ContactForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
