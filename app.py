@@ -11,25 +11,24 @@ from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from dotenv import load_dotenv
 from flask_mail import Mail, Message
+from flask_migrate import Migrate  # Import Flask-Migrate
 
 load_dotenv()  # Load environment variables from .env file
-
 
 # Create the Flask application instance
 def create_app():
     # Initialize the Flask application
     app = Flask(__name__, static_folder='static')
 
-    # Configuration for SQLite database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(app.instance_path, 'books.db')
+    # Configuration for PostgreSQL database
+    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://u44rtq8lrlnr5l:pfa61c23e415abe4f10260bab560e9c7f762ba7fc9fde2c68757f92940a0b6f20@c7u1tn6bvvsodf.cluster-czz5s0kz4scl.eu-west-1.rds.amazonaws.com:5432/d7q5q599jdl134"
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    # get secret key
-    app.config['SECRET_KEY'] = "+$2At1z~QE7_^7il`"
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', "+$2At1z~QE7_^7il`")
 
     # Initialize the database
     db.init_app(app)
-    migrate.init_app(app, db)
-    
+    migrate.init_app(app, db)  # Initialize Flask-Migrate
+
     # define admin class
     class ReviewAdmin(ModelView):
         column_list = ('review_id', 'book_title', 'user_id', 'rating', 'review_text', 'created_at')
@@ -63,7 +62,6 @@ def create_app():
                 abort(403)  # Return a 403 Forbidden error if not an admin
             return f(*args, **kwargs)
         return decorated_function
-    
 
     # route for home page (index.html)
     @app.route('/')
@@ -84,12 +82,10 @@ def create_app():
         # Render the index.html template with the list of books
         return render_template('index.html', books=all_books)
 
-    
     # route for about page
     @app.route('/about')
     def about():
         return render_template('about.html')
-
 
     @app.route('/book/<int:book_id>', methods=['GET', 'POST'])
     def book_detail(book_id):
@@ -147,7 +143,6 @@ def create_app():
         # Render the register.html template with the form
         return render_template('register.html', title='Register', form=form)
 
-
     # Initialize the LoginManager
     login_manager = LoginManager()
     login_manager.init_app(app)
@@ -187,7 +182,6 @@ def create_app():
         # Render the login.html template with the form
         return render_template('login.html', title='Login', form=form)
 
-
     # logout route
     @app.route('/logout')
     def logout():
@@ -196,13 +190,11 @@ def create_app():
         # Redirect to the home page after logging out
         return redirect(url_for('home'))
 
-
     # Context processor to inject the current year into all templates
     @app.context_processor
     def inject_current_year():
         # Return a dictionary with the current year
         return {'current_year': datetime.now().year}
-    
 
     # route for adding a review
     @app.route('/book/<int:book_id>/review', methods=['GET', 'POST'])
@@ -234,7 +226,6 @@ def create_app():
         # Render the add_review.html template with the form and book
         return render_template('add_review.html', form=form, book=book)
 
-    
     # route for adding a book
     @app.route('/add_book', methods=['GET', 'POST'])
     def add_book():
@@ -260,8 +251,7 @@ def create_app():
         
         # Render the add_book.html template with the form
         return render_template('add_book.html', form=form)
-    
-    
+
     # route for updating a book description
     @app.route('/book/<int:book_id>/update_description', methods=['GET', 'POST'])
     @login_required
@@ -289,7 +279,6 @@ def create_app():
         # Render the update_book_description.html template with the form and book
         return render_template('update_book_description.html', form=form, book=book)
 
-    
     # route for submitting a contact form message
     @app.route('/contact', methods=['GET', 'POST'])
     def contact():
