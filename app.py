@@ -1,7 +1,7 @@
 import os
 import base64
 from extensions import db, migrate
-from models import Book, Review, Category, User, ContactMessage
+from models import Book, Review, Category, User, ContactMessage, ReadingList
 from forms import RegistrationForm, LoginForm, ReviewForm, BookForm, ContactForm, UpdateBookDescriptionForm, EditProfileForm
 from datetime import datetime, timezone
 from flask_login import login_user, logout_user, current_user, login_required, LoginManager
@@ -194,6 +194,18 @@ def create_app():
         # Redirect to the profile page
         return redirect(url_for('profile'))
     
+    
+    @app.route('/add_to_reading_list/<int:book_id>', methods=['POST'])
+    @login_required
+    def add_to_reading_list(book_id):
+        book = Book.query.get_or_404(book_id)
+        if book not in current_user.reading_list:
+            current_user.reading_list.append(book)
+            db.session.commit()
+            flash('Book added to your reading list!', 'success')
+        else:
+            flash('Book is already in your reading list.', 'info')
+        return redirect(url_for('book_detail', book_id=book_id))
 
     # Initialize the LoginManager
     login_manager = LoginManager()
