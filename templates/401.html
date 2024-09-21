@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}Unauthorized{% endblock %}
+
+{% block content %}
+    <h1>401 - Move along now!</h1>
+    <p>Nothing to see here.</p>
+    <p><a href="{{ url_for('login') }}">Login</a> or <a href="{{ url_for('register') }}">Register</a></p>
+{% endblock %}
