@@ -15,6 +15,7 @@ class User(UserMixin, db.Model):
     role = db.Column(db.String(50), nullable=False, default='regular')
 
     reviews = db.relationship('Review', backref='user', lazy=True)
+    reading_list = db.relationship('ReadingList', backref='user', lazy=True)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -67,9 +68,15 @@ class BookCategory(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey('categories.category_id'), primary_key=True, nullable=False)
 
 class ContactMessage(db.Model):
-    __tablename__ = 'contact_messages' # Ensure the table name matches the database
+    __tablename__ = 'contact_messages'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False)
     message = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.DateTime, default=db.func.current_timestamp(), nullable=False)
+    
+class ReadingList(db.Model):
+    __tablename__ = 'reading_list'
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), primary_key=True)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.book_id'), primary_key=True)
+    added_at = db.Column(db.DateTime, default=datetime.utcnow)
