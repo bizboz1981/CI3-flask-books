@@ -56,3 +56,10 @@ class ContactForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     message = TextAreaField('Message', validators=[DataRequired()])
     submit = SubmitField('Send Message')
+    
+    
+class EditProfileForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    profile_picture_url = URLField('Profile Picture URL', validators=[Optional(), URL()])
+    submit = SubmitField('Update Profile')

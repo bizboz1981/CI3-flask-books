@@ -2,7 +2,7 @@ import os
 import base64
 from extensions import db, migrate
 from models import Book, Review, Category, User, ContactMessage
-from forms import RegistrationForm, LoginForm, ReviewForm, BookForm, ContactForm, UpdateBookDescriptionForm
+from forms import RegistrationForm, LoginForm, ReviewForm, BookForm, ContactForm, UpdateBookDescriptionForm, EditProfileForm
 from datetime import datetime, timezone
 from flask_login import login_user, logout_user, current_user, login_required, LoginManager
 from flask import Flask, render_template, abort, redirect, url_for, flash, request # type: ignore
@@ -157,19 +157,43 @@ def create_app():
 
 
     # profile route
-    @app.route('/profile')
+    @app.route('/profile', methods=['GET', 'POST'])
     @login_required
     def profile():
-        # Check if the user is authenticated
-        if not current_user.is_authenticated:
-            abort(404)
-    
-        # Retrieve the current user's information
-        user = current_user
+        form = EditProfileForm()
         
-        # Render the profile.html template with the user's information
-        return render_template('profile.html', user=user)
+        if form.validate_on_submit():
+            current_user.username = form.username.data
+            current_user.email = form.email.data
+            current_user.profile_picture_url = form.profile_picture_url.data
+            db.session.commit()
+            flash('Your profile has been updated!', 'success')
+            return redirect(url_for('profile'))
+        
+        elif request.method == 'GET':
+            form.username.data = current_user.username
+            form.email.data = current_user.email
+            form.profile_picture_url.data = current_user.profile_picture_url
+        
+        edit_mode = request.args.get('edit', 'false').lower() == 'true'
+        return render_template('profile.html', form=form, user=current_user, edit_mode=edit_mode)
 
+    
+    # route for deleting a profile picture
+    @app.route('/delete_profile_picture', methods=['POST'])
+    @login_required
+    def delete_profile_picture():
+        # Check if the form method is DELETE
+        if request.form.get('_method') == 'DELETE':
+            # Set the current user's profile picture URL to None
+            current_user.profile_picture_url = None
+            # Commit the changes to the database
+            db.session.commit()
+            # Flash a success message
+            flash('Your profile picture has been deleted!', 'success')
+        # Redirect to the profile page
+        return redirect(url_for('profile'))
+    
 
     # Initialize the LoginManager
     login_manager = LoginManager()
