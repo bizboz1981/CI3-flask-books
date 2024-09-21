@@ -156,9 +156,14 @@ def create_app():
         return render_template('register.html', title='Register', form=form)
 
 
+    # profile route
     @app.route('/profile')
     @login_required
     def profile():
+        # Check if the user is authenticated
+        if not current_user.is_authenticated:
+            abort(404)
+    
         # Retrieve the current user's information
         user = current_user
         
@@ -324,8 +329,37 @@ def create_app():
             flash('Your message has been sent successfully!', 'success')
             return redirect(url_for('contact'))
         return render_template('contact.html', form=form)
-        
+    
+    
+    # Define the custom 404 error handler
+    def page_not_found(e):
+        return render_template('404.html'), 404
+    
+    
+    # Define the custom 401 error handler
+    def unauthorized(e):
+        return render_template('401.html'), 401
+    
+    
+    # Register the custom 404 error handler
+    app.register_error_handler(401, unauthorized)
+    app.register_error_handler(404, page_not_found)
+
+
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return render_template('404.html'), 404
+    
+    
+    @app.errorhandler(401)
+    def unauthorized(e):
+        return render_template('401.html'), 401
+    
+    
     return app
+
+
+
 
 
 if __name__ == '__main__':
