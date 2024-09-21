@@ -32,13 +32,13 @@
         <p><strong>Role:</strong> {{ user.role }}</p>
         <a href="{{ url_for('profile', edit='true') }}" class="btn btn-secondary">Edit Profile</a>
         <h2>Reading List</h2>
-    <ul>
-        {% for book in user.reading_list %}
-            <li>
-                <img src="{{ book.cover_image_url }}" alt="Cover of {{ book.title }}" class="reading-list-cover">
-                {{ book.title }}
-            </li>
-        {% endfor %}
-    </ul>
+        <ul>
+            {% for book in user.reading_list %}
+                <li>
+                    <img src="{{ book.book.cover_image_url }}" alt="Cover of {{ book.book.title }}" class="reading-list-cover">
+                    {{ book.book.title }}
+                </li>
+            {% endfor %}
+        </ul>
     {% endif %}
 {% endblock %}
