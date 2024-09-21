@@ -15,8 +15,8 @@ class User(UserMixin, db.Model):
     role = db.Column(db.String(50), nullable=False, default='regular')
 
     reviews = db.relationship('Review', backref='user', lazy=True)
-    reading_list = db.relationship('ReadingList', backref='user', lazy=True)
-
+    reading_list = db.relationship('ReadingList', backref='user', lazy=True, cascade='all, delete-orphan')
+    
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
@@ -40,6 +40,7 @@ class Book(db.Model):
     
     reviews = db.relationship('Review', backref='book', lazy=True, cascade="all, delete-orphan")
     categories = db.relationship('BookCategory', backref='book', lazy=True, cascade='all, delete-orphan')
+    reading_list_entries = db.relationship('ReadingList', backref='book', lazy=True, cascade='all, delete-orphan')
     
 
 class Review(db.Model):

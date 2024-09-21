@@ -199,8 +199,9 @@ def create_app():
     @login_required
     def add_to_reading_list(book_id):
         book = Book.query.get_or_404(book_id)
-        if book not in current_user.reading_list:
-            current_user.reading_list.append(book)
+        if not any(rl.book_id == book_id for rl in current_user.reading_list):
+            new_entry = ReadingList(user_id=current_user.user_id, book_id=book_id)
+            db.session.add(new_entry)
             db.session.commit()
             flash('Book added to your reading list!', 'success')
         else:
