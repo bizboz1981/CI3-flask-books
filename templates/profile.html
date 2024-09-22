@@ -28,7 +28,7 @@
         <p><strong>Profile Picture:</strong> <img src="{{ user.profile_picture_url }}" alt="Profile Picture" class="profile-pic"></p>
         <p><strong>Username:</strong> {{ user.username }}</p>
         <p><strong>Email:</strong> {{ user.email }}</p>
-        <p><strong>Member Since:</strong> {{ user.created_at.strftime('%B %d, %Y') }}</p>
+        <p><strong>Member Since:</strong> {{ user.created_at.strftime('%d %B, %Y') }}</p>
         <p><strong>Role:</strong> {{ user.role }}</p>
         <a href="{{ url_for('profile', edit='true') }}" class="btn btn-secondary">Edit Profile</a>
         <h2>Reading List</h2>
