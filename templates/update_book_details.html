@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Update Details for {{ book.title }}</h2>
+    <form method="POST" action="{{ url_for('update_book_details', book_id=book.book_id) }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.title.label(class="form-label") }}
+            {{ form.title(class_='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.author.label(class="form-label") }}
+            {{ form.author(class_='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.cover_image_url.label(class="form-label") }}
+            {{ form.cover_image_url(class_='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.description.label(class="form-label") }}
+            {{ form.description(class_='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.published_date.label(class="form-label") }}
+            {{ form.published_date(class_='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.categories.label(class='categories-label form-label') }}
+            <div class="categories">
+                {% for subfield in form.categories %}
+                    <div class="form-check">
+                        {{ subfield(class_='form-check-input') }}
+                        {{ subfield.label(class_='form-check-label') }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form.submit(class_='btn btn-primary') }}
+        </div>
+    </form>
+</div>
+{% endblock %}

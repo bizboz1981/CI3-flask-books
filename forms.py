@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, URLField, TextAreaField, SelectMultipleField, widgets, HiddenField
 from wtforms.validators import DataRequired, Email, EqualTo, Optional, URL, NumberRange, Length, ValidationError
-from wtforms import BooleanField, IntegerField
+from wtforms import BooleanField, IntegerField, DateField
 from models import Category
 
 class LoginForm(FlaskForm):
@@ -47,9 +47,18 @@ class BookForm(FlaskForm):
         super(BookForm, self).__init__(*args, **kwargs)
         self.categories.choices = [(category.category_id, category.category_name) for category in Category.query.all()]
         
-class UpdateBookDescriptionForm(FlaskForm):
+class UpdateBookDetailsForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    author = StringField('Author', validators=[DataRequired()])
+    cover_image_url = StringField('Cover Image URL', validators=[Optional(), URL()])
     description = TextAreaField('Description', validators=[DataRequired()])
-    submit = SubmitField('Update Description')
+    published_date = DateField('Published Date', validators=[DataRequired()])
+    categories = SelectMultipleField('Categories', coerce=int, option_widget=widgets.CheckboxInput())
+    submit = SubmitField('Update Book Details')
+
+    def __init__(self, *args, **kwargs):
+        super(UpdateBookDetailsForm, self).__init__(*args, **kwargs)
+        self.categories.choices = [(category.category_id, category.category_name) for category in Category.query.all()]
 
 class ContactForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])

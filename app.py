@@ -2,7 +2,7 @@ import os
 import base64
 from extensions import db, migrate
 from models import Book, Review, Category, User, ContactMessage, ReadingList
-from forms import RegistrationForm, LoginForm, ReviewForm, BookForm, ContactForm, UpdateBookDescriptionForm, EditProfileForm
+from forms import RegistrationForm, LoginForm, ReviewForm, BookForm, ContactForm, UpdateBookDetailsForm, EditProfileForm
 from datetime import datetime, timezone
 from flask_login import login_user, logout_user, current_user, login_required, LoginManager
 from flask import Flask, render_template, abort, redirect, url_for, flash, request # type: ignore
@@ -324,31 +324,41 @@ def create_app():
 
 
     # route for updating a book description
-    @app.route('/book/<int:book_id>/update_description', methods=['GET', 'POST'])
+    @app.route('/book/<int:book_id>/update', methods=['GET', 'POST'])
     @login_required
-    def update_book_description(book_id):
+    def update_book_details(book_id):
         # Retrieve the book by ID or return a 404 error if not found
         book = Book.query.get_or_404(book_id)
         
         # Create an instance of the UpdateBookDescriptionForm
-        form = UpdateBookDescriptionForm()
+        form = UpdateBookDetailsForm()
 
         # Check if the form is submitted and validated
         if form.validate_on_submit():
             # Update the book's summary with the new description from the form
+            book.title = form.title.data
+            book.author = form.author.data
+            book.cover_image_url = form.cover_image_url.data
             book.summary = form.description.data
+            book.published_date = form.published_date.data
+            book.categories = [Category.query.get(category_id) for category_id in form.categories.data]
             # Commit the changes to the database
             db.session.commit()
             # Flash a success message and redirect to the book detail page
-            flash('Book description updated successfully!', 'success')
+            flash('Book details updated successfully!', 'success')
             return redirect(url_for('book_detail', book_id=book_id))
 
         # Pre-populate the form with the existing description if the request method is GET
         if request.method == 'GET':
+            form.title.data = book.title
+            form.author.data = book.author
+            form.cover_image_url.data = book.cover_image_url
             form.description.data = book.summary
+            form.published_date.data = book.published_date
+            form.categories.data = [category.category_id for category in book.categories]
         
-        # Render the update_book_description.html template with the form and book
-        return render_template('update_book_description.html', form=form, book=book)
+        # Render the update_book_details.html template with the form and book
+        return render_template('update_book_details.html', form=form, book=book)
 
 
     # route for submitting a contact form message

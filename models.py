@@ -38,7 +38,7 @@ class Book(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     reviews = db.relationship('Review', backref='book', lazy=True, cascade="all, delete-orphan")
-    categories = db.relationship('BookCategory', backref='book', lazy=True, cascade='all, delete-orphan')
+    categories = db.relationship('Category', secondary='book_categories', backref=db.backref('book_list', lazy='dynamic'))
     reading_list_entries = db.relationship('ReadingList', backref='book', lazy=True, cascade='all, delete-orphan')
     
 
