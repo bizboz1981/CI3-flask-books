@@ -20,7 +20,7 @@ class RegistrationForm(FlaskForm):
     
 class ReviewForm(FlaskForm):
     rating = HiddenField('Rating', validators=[DataRequired()])
-    review_text = TextAreaField('Review', validators=[Optional()])
+    review_text = TextAreaField('Review', validators=[DataRequired()])
     submit = SubmitField('Submit Review')
 
     def validate_rating(self, field):

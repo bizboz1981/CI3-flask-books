@@ -6,7 +6,13 @@
         <div class="col-12 col-lg-5">
             <h2 class="book-title">{{ book.title }}</h2>
             <p>Author: {{ book.author }}</p>
-            <p>Published: {{ book.published_date.strftime('%d %B, %Y') }}</p>
+            <p>Published: 
+                {% if book.published_date %}
+                    {{ book.published_date.strftime('%d %B, %Y') }}
+                {% else %}
+                    Unknown
+                {% endif %}
+            </p>
             <img id="book_cover" class="card-img-top" 
                  src="{{ book.cover_image_url }}" 
                  alt="Book cover of {{ book.title }}" />
@@ -68,4 +74,5 @@
         </div>
     </div>
 </div>
+
 {% endblock %}

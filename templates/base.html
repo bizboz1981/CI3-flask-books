@@ -36,6 +36,15 @@
             </div>
         </div>
     </nav>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-message" id="flash-message">
+            {% for category, message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
     <header>
         <h1>{{ page_title }}</h1>
     </header>
@@ -49,5 +58,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
     <script src="{{ url_for('static', filename='js/carousel.js') }}"></script>
     <script src="{{ url_for('static', filename='js/star_rating.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/flash_message.js') }}"></script>
 </body>
 </html>

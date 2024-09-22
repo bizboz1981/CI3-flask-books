@@ -156,3 +156,19 @@ hr {
     height: 150px;
     object-fit: cover;
 }
+
+.flash-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #568861;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    display: none;
+    z-index: 1000;
+    width: 90%;
+    max-width: 800px;
+    text-align: center;
+}
