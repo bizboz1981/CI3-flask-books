@@ -1,44 +1,56 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>User Profile</h1>
-    {% if edit_mode %}
-        <form method="POST" action="{{ url_for('profile') }}">
-            {{ form.hidden_tag() }}
-            <div class="mb-3">
-                {{ form.username.label(class="form-label") }}
-                {{ form.username(class_='form-control') }}
-            </div>
-            <div class="mb-3">
-                {{ form.email.label(class="form-label") }}
-                {{ form.email(class_='form-control') }}
-            </div>
-            <div class="mb-3">
-                {{ form.profile_picture_url.label(class="form-label") }}
-                {{ form.profile_picture_url(class_='form-control') }}
-            </div>
-            <form method="POST" action="{{ url_for('delete_profile_picture') }}">
-                <input type="hidden" name="_method" value="DELETE">
-                <button type="submit" class="btn btn-danger mb-3">Delete Profile Picture</button>
-            </form>
-            <div class="mb-3">
-                {{ form.submit(class_='btn btn-primary') }}
-            </div>
-        </form>
-    {% else %}
-        <p><strong>Profile Picture:</strong> <img src="{{ user.profile_picture_url }}" alt="Profile Picture" class="profile-pic"></p>
-        <p><strong>Username:</strong> {{ user.username }}</p>
-        <p><strong>Email:</strong> {{ user.email }}</p>
-        <p><strong>Member Since:</strong> {{ user.created_at.strftime('%d %B, %Y') }}</p>
-        <p><strong>Role:</strong> {{ user.role }}</p>
-        <a href="{{ url_for('profile', edit='true') }}" class="btn btn-secondary">Edit Profile</a>
-        <h2>Reading List</h2>
-        <ul>
-            {% for book in user.reading_list %}
-                <li>
-                    <img src="{{ book.book.cover_image_url }}" alt="Cover of {{ book.book.title }}" class="reading-list-cover">
-                    {{ book.book.title }}
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+<div class="container mx-auto">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-4 col-md-5 col-sm-6">
+            <h1>User Profile</h1>
+            {% if edit_mode %}
+                <form method="POST" action="{{ url_for('profile') }}">
+                    {{ form.hidden_tag() }}
+                    <div class="mb-3">
+                        {{ form.username.label(class="form-label") }}
+                        {{ form.username(class_='form-control') }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.email.label(class="form-label") }}
+                        {{ form.email(class_='form-control') }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.profile_picture_url.label(class="form-label") }}
+                        {{ form.profile_picture_url(class_='form-control') }}
+                    </div>
+                    <form method="POST" action="{{ url_for('delete_profile_picture') }}">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger mb-3">Delete Profile Picture</button>
+                    </form>
+                    <div class="mb-3">
+                        {{ form.submit(class_='btn btn-primary') }}
+                    </div>
+                </form>
+            {% else %}
+                <p><strong>Profile Picture:</strong> <img src="{{ user.profile_picture_url }}" alt="Profile Picture" class="profile-pic"></p>
+                <p><strong>Username:</strong> {{ user.username }}</p>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Member Since:</strong> {{ user.created_at.strftime('%d %B, %Y') }}</p>
+                <p><strong>Role:</strong> {{ user.role }}</p>
+                <a href="{{ url_for('profile', edit='true') }}" class="btn btn-secondary">Edit Profile</a>
+            {% endif %}
+        </div>
+        <div class="col-12 col-lg-4 col-md-5 col-sm-6">
+            <h1>Reading List</h1>
+            <ul class="list-unstyled">
+                {% for book in user.reading_list %}
+                    <li class="d-flex mb-3">
+                        <img src="{{ book.book.cover_image_url }}" alt="Cover of {{ book.book.title }}" class="reading-list-cover me-3">
+                        <div>
+                            <p class="mb-1"><strong>{{ book.book.title }}</strong></p>
+                            <p class="mb-1">{{ book.book.author }}</p>
+                            <p class="mb-1">{{ book.book.published_date }}</p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}
