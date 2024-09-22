@@ -15,7 +15,7 @@
             </p>
             <img id="book_cover" class="card-img-top" 
                  src="{{ book.cover_image_url }}" 
-                 alt="Book cover of {{ book.title }}" />
+                 alt="Book cover of {{ book.title }}">
             <p>Categories: 
                 {% for category in book.categories %}
                     {{ category.category_name }}{% if not loop.last %}, {% endif %}
