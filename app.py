@@ -299,27 +299,33 @@ def create_app():
     # route for adding a book
     @app.route('/add_book', methods=['GET', 'POST'])
     def add_book():
-        # Create an instance of the BookForm
         form = BookForm()
-        
-        # Check if the form is submitted and validated
         if form.validate_on_submit():
-            # Create a new book object with the form data
+            # Check if a book with the same ISBN already exists
+            existing_book = Book.query.filter_by(isbn=form.isbn.data).first()
+            if existing_book:
+                flash('A book with this ISBN already exists.', 'danger')
+                return redirect(url_for('add_book'))
+
+            # Create a new book instance
             new_book = Book(
                 title=form.title.data,
                 author=form.author.data,
+                published_date=form.published_date.data,
                 isbn=form.isbn.data,
                 summary=form.summary.data,
                 cover_image_url=form.cover_image_url.data,
+                created_at=datetime.utcnow()
             )
-            # Add the new book to the database session and commit
+
+            # Add the new book to the database
             db.session.add(new_book)
             db.session.commit()
-            
-            # Redirect to the home page after successfully adding the book
-            return redirect(url_for('home'))
-        
-        # Render the add_book.html template with the form
+
+            # Flash a success message and redirect to the book detail page
+            flash('Book added successfully!', 'success')
+            return redirect(url_for('book_detail', book_id=new_book.book_id))
+
         return render_template('add_book.html', form=form)
 
 
