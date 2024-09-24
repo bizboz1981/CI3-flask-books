@@ -306,7 +306,7 @@ def create_app():
             if existing_book:
                 flash('A book with this ISBN already exists.', 'danger')
                 return redirect(url_for('add_book'))
-
+            
             # Create a new book instance
             new_book = Book(
                 title=form.title.data,
