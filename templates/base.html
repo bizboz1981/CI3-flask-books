@@ -48,6 +48,9 @@
         </div>
     {% endif %}
     {% endwith %}
+    {% if page_title is not defined %}
+    {% set page_title = "Love Books" %}
+    {% endif %}
     <header>
         <h1>{{ page_title }}</h1>
     </header>
