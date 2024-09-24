@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% set page_title = "Contact us" %}
-<h1>{{ page_title }}</h1>
 {% block content %}
 <form class="long-form" method="POST" action="{{ url_for('contact') }}">
     {{ form.hidden_tag() }}
