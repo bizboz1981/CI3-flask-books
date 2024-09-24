@@ -60,7 +60,7 @@ class Category(db.Model):
     category_id = db.Column(db.Integer, primary_key=True)
     category_name = db.Column(db.String(50), nullable=False, unique=True)
 
-    books = db.relationship('BookCategory', backref='category', lazy=True)
+    books = db.relationship('BookCategory', backref='category', lazy=True, viewonly=True)
 
 class BookCategory(db.Model):
     __tablename__ = 'book_categories'
