@@ -31,6 +31,11 @@
                     {% if current_user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link" href="{{ url_for('profile') }}">Profile</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('profile') }}">
+                                <img src="{{ current_user.profile_picture_url }}" alt="Profile Picture" class="profile-pic">
+                            </a>
+                        </li>
                     {% else %}
                         <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
