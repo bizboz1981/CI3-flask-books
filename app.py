@@ -310,9 +310,9 @@ def create_app():
             
             # Validate and parse the published_date
             try:
-                published_date = datetime.strptime(form.published_date.data, '%d/%m/%Y')
+                published_date = datetime.strptime(form.published_date.data, '%Y-%m-%d')
             except ValueError:
-                flash('Invalid date format. Please use DD/MM/YYYY.', 'danger')
+                flash('Invalid date format. Please use YYYY-MM-DD.', 'danger')
                 return redirect(url_for('add_book'))
             
             # Create a new book instance
