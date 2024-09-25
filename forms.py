@@ -34,7 +34,7 @@ class ReviewForm(FlaskForm):
 class BookForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     author = StringField('Author', validators=[DataRequired()])
-    published_date = StringField('Published Date', validators=[DataRequired()])
+    published_date = DateField('Published Date', validators=[DataRequired()])
     isbn = StringField('ISBN', validators=[Optional(), Length(min=10, max=13)])
     summary = StringField('Summary', validators=[DataRequired()])
     cover_image_url = StringField('Cover Image URL')
