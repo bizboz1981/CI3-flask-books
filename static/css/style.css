@@ -104,6 +104,8 @@ h5.book-title {
     background-color: #3F2F2F;
     border-color: #3F2F2F;
     color: white;
+    margin: 10px;
+    border-radius: 5px;
 }
 
 .input-background {
