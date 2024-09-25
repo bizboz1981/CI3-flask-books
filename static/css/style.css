@@ -31,6 +31,13 @@ h5.book-title {
     display: block;
 }
 
+.book-cover-lg {
+    height: 300px;
+    width: 200px;
+    object-fit: cover;
+    right: -50%;
+    margin-right: 10px;
+  }
 
 #title, #author, #published_date, #isbn, #summary, #categories, #cover_image_url {
     margin-bottom: 15px;
