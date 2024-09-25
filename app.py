@@ -10,6 +10,7 @@ from functools import wraps
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from dotenv import load_dotenv
+from datetime import datetime
 
 
 load_dotenv()  # Load environment variables from .env file
@@ -305,6 +306,13 @@ def create_app():
             existing_book = Book.query.filter_by(isbn=form.isbn.data).first()
             if existing_book:
                 flash('A book with this ISBN already exists.', 'danger')
+                return redirect(url_for('add_book'))
+            
+            # Validate and parse the published_date
+            try:
+                published_date = datetime.strptime(form.published_date.data, '%d/%m/%Y')
+            except ValueError:
+                flash('Invalid date format. Please use DD/MM/YYYY.', 'danger')
                 return redirect(url_for('add_book'))
             
             # Create a new book instance
