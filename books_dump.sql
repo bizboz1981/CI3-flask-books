@@ -1,43 +1,10 @@
 BEGIN TRANSACTION;
 
--- DROP TABLE IF EXISTS alembic_version CASCADE;
--- DROP TABLE IF EXISTS book_categories CASCADE;
--- DROP TABLE IF EXISTS reviews CASCADE;
--- DROP TABLE IF EXISTS books CASCADE;
--- DROP TABLE IF EXISTS categories CASCADE;
--- DROP TABLE IF EXISTS contact_messages CASCADE;
--- DROP TABLE IF EXISTS users CASCADE;
-
-
--- CREATE TABLE alembic_version (
--- 	version_num VARCHAR(32) NOT NULL, 
--- 	CONSTRAINT alembic_version_pkc PRIMARY KEY (version_num)
--- );
 INSERT INTO alembic_version VALUES('fc73138130dd');
 
--- CREATE TABLE "users" (
--- 	user_id INTEGER NOT NULL, 
--- 	username VARCHAR(50) NOT NULL, 
--- 	email VARCHAR(100) NOT NULL, 
--- 	password_hash VARCHAR(255) NOT NULL, 
--- 	profile_picture_url VARCHAR(255), 
--- 	created_at TIMESTAMP, 
--- 	role VARCHAR(50) DEFAULT 'user' NOT NULL
--- );
 INSERT INTO users VALUES(2,'Bill','willjsaunders@icloud.com','scrypt:32768:8:1$pMthLituo1jQrZ7l$34cd907c1cb4d8d329b5947a4b2946849a50c13d42108fcabb368457e18a6d080ff73a72783d7d89f36ff753efb6ca4169a20ad8ec467c81d2ffefb26a73292b','https://www.swansea.ac.uk','2024-08-10 11:40:44.000000','admin');
 INSERT INTO users VALUES(3,'Eliza','eliza@icloud.com','scrypt:32768:8:1$mjIlTOKT5eOksANH$d445865b269957ae2a03a0f986513c97ba3c0d1bac796736bb3e8c176f518ed45de46bc781f38efc19e667aed2fa69fc5f234a601084e41a74a20bfc4491b48a','https://www.google.com','2024-08-15 18:57:54.729584','regular');
 
--- CREATE TABLE books (
--- 	book_id INTEGER NOT NULL, 
--- 	title VARCHAR(255) NOT NULL, 
--- 	author VARCHAR(255) NOT NULL, 
--- 	published_date DATE, 
--- 	isbn VARCHAR(13), 
--- 	summary TEXT, 
--- 	cover_image_url VARCHAR(255), 
--- 	created_at TIMESTAMP, cover_image_data BYTEA, 
--- 	PRIMARY KEY (book_id)
--- );
 INSERT INTO books VALUES(1,'To Kill a Mockingbird','Harper Lee','1960-07-11','9780061120084','A novel about the serious issues of rape and racial inequality.','https://raw.githubusercontent.com/bizboz1981/CI3-flask-books/main/static/assets/img/to_kill_a_mockingbird.jpeg',NULL);
 INSERT INTO books VALUES(2,'1984','George Orwell','1949-06-08','9780451524935','A dystopian novel set in a totalitarian society ruled by Big Brother.','https://raw.githubusercontent.com/bizboz1981/CI3-flask-books/main/static/assets/img/1984.jpeg',NULL);
 INSERT INTO books VALUES(3,'Pride and Prejudice','Jane Austen','1813-01-28','9781503290563','A romantic novel that also offers a biting critique of the British class system.','https://raw.githubusercontent.com/bizboz1981/CI3-flask-books/main/static/assets/img/pride_and_prejudice.jpeg',NULL);
@@ -88,12 +55,7 @@ INSERT INTO books VALUES(49,'Emma','Jane Austen','1810-01-01',NULL,'Comedy of ma
 INSERT INTO books VALUES(50,'Love in the Time of Cholera','Gabriel Garcia Marquez','1990-01-01','554313','Magical realism in South America','https://m.media-amazon.com/images/I/61OBwknuKsL._AC_UF894,1000_QL80_.jpg',NULL);
 INSERT INTO books VALUES(51,'Persuasion','Jane Austen','1815-01-01','9780192833617','A classic piece of literature ','https://m.media-amazon.com/images/I/81mUs+3qcfL._AC_UF894,1000_QL80_.jpg',NULL);
 INSERT INTO books VALUES(52,'The Mill on the Floss','George Eliot',NULL,'1265432875435','Explores big themes of death','https://m.media-amazon.com/images/I/61lPnFKLJ8L._AC_UF894,1000_QL80_.jpg',NULL);
--- CREATE TABLE categories (
--- 	category_id INTEGER NOT NULL, 
--- 	category_name VARCHAR(50) NOT NULL, 
--- 	PRIMARY KEY (category_id), 
--- 	UNIQUE (category_name)
--- );
+
 INSERT INTO categories VALUES(1,'Fiction');
 INSERT INTO categories VALUES(2,'Non-Fiction');
 INSERT INTO categories VALUES(3,'Science Fiction');
@@ -119,13 +81,7 @@ INSERT INTO categories VALUES(22,'Magical Realism');
 INSERT INTO categories VALUES(23,'Satire');
 INSERT INTO categories VALUES(24,'War');
 INSERT INTO categories VALUES(25,'Gothic');
--- CREATE TABLE book_categories (
--- 	book_id INTEGER NOT NULL, 
--- 	category_id INTEGER NOT NULL, 
--- 	PRIMARY KEY (book_id, category_id), 
--- 	FOREIGN KEY(book_id) REFERENCES books (book_id), 
--- 	FOREIGN KEY(category_id) REFERENCES categories (category_id)
--- );
+
 INSERT INTO book_categories VALUES(1,1);
 INSERT INTO book_categories VALUES(1,11);
 INSERT INTO book_categories VALUES(1,12);
@@ -271,17 +227,7 @@ INSERT INTO book_categories VALUES(50,18);
 INSERT INTO book_categories VALUES(50,22);
 INSERT INTO book_categories VALUES(51,9);
 INSERT INTO book_categories VALUES(51,11);
--- CREATE TABLE reviews (
--- 	review_id INTEGER NOT NULL, 
--- 	book_id INTEGER NOT NULL, 
--- 	user_id INTEGER NOT NULL, 
--- 	rating INTEGER NOT NULL, 
--- 	review_text TEXT, 
--- 	created_at TIMESTAMP, 
--- 	PRIMARY KEY (review_id), 
--- 	FOREIGN KEY(book_id) REFERENCES books (book_id), 
--- 	FOREIGN KEY(user_id) REFERENCES users (user_id)
--- );
+
 INSERT INTO reviews VALUES(1,49,2,5,'Absolutely glorious book!','2024-08-10 20:43:20.449826');
 INSERT INTO reviews VALUES(2,49,2,5,'Absolutely glorious book!','2024-08-10 20:43:40.768364');
 INSERT INTO reviews VALUES(3,5,2,3,'Not read this one','2024-08-10 20:46:13.448584');
@@ -300,25 +246,5 @@ INSERT INTO reviews VALUES(15,2,2,4,'testing','2024-09-11 17:14:28.497358');
 INSERT INTO reviews VALUES(16,2,2,3,'Does this review persist?','2024-09-11 17:14:49.028379');
 INSERT INTO reviews VALUES(17,2,2,2,'Clever but dreary','2024-09-11 17:22:31.214236');
 
-
--- CREATE TABLE _alembic_tmp_users (
--- 	user_id INTEGER NOT NULL, 
--- 	username VARCHAR(50) NOT NULL, 
--- 	email VARCHAR(100) NOT NULL, 
--- 	password_hash VARCHAR(128), 
--- 	profile_picture_url VARCHAR(255), 
--- 	created_at TIMESTAMP, 
--- 	role VARCHAR(50) DEFAULT 'user' NOT NULL, 
--- 	PRIMARY KEY (user_id), 
--- 	UNIQUE (username), 
--- 	UNIQUE (email)
--- );
--- CREATE TABLE contact_messages (
---     id SERIAL PRIMARY KEY,
---     name TEXT NOT NULL,
---     email TEXT NOT NULL,
---     message TEXT NOT NULL,
---     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
--- );
 INSERT INTO contact_messages VALUES(1,'Bill','willjsaunders@icloud.com','Testing','2024-09-07 07:40:34');
 COMMIT;
