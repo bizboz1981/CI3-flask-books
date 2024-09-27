@@ -3,12 +3,14 @@
 {% block content %}
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5 position-relative">
+        <!-- Search box -->
         <form method="GET" action="{{ url_for('home') }}" class="mb-4">
             <div class="input-group">
                 <input type="text" name="q" class="input-background form-control" placeholder="Search by title or author" value="{{ request.args.get('q', '') }}">
                 <button class="btn btn-outline-secondary" type="submit">Search</button>
             </div>
         </form>
+        <!-- Carousel -->
         <div id="bookCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 {% for book in books %}
@@ -46,6 +48,7 @@
                 {% endfor %}
             </div>
         </div>
+        <!-- Carousel controls -->
         <button class="carousel-control-prev custom-carousel-control" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
