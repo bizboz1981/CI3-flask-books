@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container">
-    <h2>Update Details for {{ book.title }}</h2>
+    <h2>Update Details for <em>{{ book.title }}</em></h2>
     <form method="POST" action="{{ url_for('update_book_details', book_id=book.book_id) }}">
         {{ form.hidden_tag() }}
         <div class="form-group">
