@@ -1,5 +1,7 @@
 # CI3 Flask Books Application
 
+![am_i_responsive](static/assets/img/am_i_responsive.png)
+
 Link to live project: [CI3 Flask Books](https://ci3-book-review-d8d5166064da.herokuapp.com)
 
 ## Table of Contents
@@ -20,7 +22,11 @@ The project provides a simple interface where users can view, add, edit, or dele
 
 The scope of the project changed slightly half way through. I had initially intended to have a voting system on the reviews, and to have a custom authentication system. This changed when I discovered Flask's native authentication module; I also replace the voting functionality with a personalised reading list on a personal profile page.
 
+### The initial data model
+![data_model_1](static/assets/img/data_model_1.jpeg)
 
+### The final data model
+![data_model_2](static/assets/img/data_model_2.jpeg)
 
 ## User Experience (UX)
 ### User Stories
