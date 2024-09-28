@@ -1,5 +1,40 @@
 {% extends "base.html" %}
 {% set page_title = "About this site" %}
 {% block content %}
-
+<div class="container mt-5">
+    <p>Welcome to our book review website! Our mission is to provide a platform where book lovers can share their thoughts and discover new reads.</p>
+    
+    <h2>Our Mission</h2>
+    <p>We aim to create a community of readers who can connect through their love of books. Whether you're looking for your next great read or want to share your latest book review, we've got you covered.</p>
+    
+    <h2>Our Team</h2>
+    <p>Our team is composed of passionate readers and tech enthusiasts dedicated to bringing you the best book review experience.</p>
+    
+    <h2>History</h2>
+    <p>Founded in 2023, our website started as a small project and has grown into a thriving community of book lovers.</p>
+    
+    <h2>Features</h2>
+    <ul>
+        <li><strong>Personalised experience:</strong></li>
+        <p>Register for an account to access exclusive features such as personalised reading lists and book recommendations</p>
+        <li><strong>Extensive library catalogue:</strong></li>
+        <p>Scroll through the carousel on the Home page to discover a new read</p>
+        <li><strong>Advanced search functionality:</strong></li>
+        <p>Looking for something in particular? Use the search bar to look something up by title or author</p>
+        <li><strong>User-generated content:</strong></li>
+        <p>Still can't find what you want? Be sure to add the missing title on the Add Book page</p>
+        <p>Have a review to share? Submit your thoughts on the Add Review page</p>
+        <p>Spotted an error? Be sure to correct it by updating the book's details</p>
+        <li><strong>Comprehensive reviews:</strong></li>
+        <p>Read what others have to say about a book before you decide to read it</p>
+        <li><strong>Personalized reading lists:</strong></li>
+        <p>Found your next read? Be sure to add it to your reading list, which can be found in your Profile page</p>
+    </ul>
+    
+    <h2>Contact Us</h2>
+    <p>If you have any questions or feedback, feel free to <a href="{{ url_for('contact') }}">contact us</a>.</p>
+    
+    <h2>Acknowledgments</h2>
+    <p>We would like to thank our contributors and partners for their support in making this website possible.</p>
+</div>
 {% endblock %}
