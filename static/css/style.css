@@ -1,7 +1,7 @@
+/* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-
-
+/* General Styles */
 body {
     margin: 20px;
     padding: 20px;
@@ -21,10 +21,9 @@ h5.book-title {
     font-family: 'Playfair Display', serif;
 }
 
+/* Book Cover Styles */
 .book_cover {
     max-width: 200px;
-    /* aspect-ratio: 2/3; */
-    /* max-width: 90%; */
     height: 300px;  
     object-fit: fill; 
     margin: 10px;
@@ -37,17 +36,54 @@ h5.book-title {
     object-fit: cover;
     right: -50%;
     margin-right: 10px;
-  }
+}
 
+/* Form Styles */
 #title, #author, #published_date, #isbn, #summary, #categories, #cover_image_url {
     margin-bottom: 15px;
 }
 
+.form-label {
+    font-weight: bold;
+}
+
+.form-control {
+    margin-bottom: 0px !important;
+}
+
+.input-background {
+    background-color: #F2F2F2;
+}
+
+.long-form {
+    width: 50%;
+    margin: 0 auto;
+}
+
+/* Button Styles */
 .btn-primary {
     background-color: #007bff;
     border-color: #007bff;
 }
 
+.btn {
+    background-color: #3F2F2F;
+    border-color: #3F2F2F;
+    color: white;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #3F2F2F !important;
+}
+
+.nav-link {
+    color: white !important;
+}
+
+/* Carousel Styles */
 .carousel-item {
     display: none;
     transition: transform 0.6s ease-in-out;
@@ -82,6 +118,7 @@ h5.book-title {
     right: -5%;
 }
 
+/* Card Styles */
 .card {
     flex: 0 0 auto;
     width: 100%;
@@ -99,31 +136,7 @@ h5.book-title {
     margin-right: auto;
 }
 
-.navbar {
-    background-color: #3F2F2F !important;
-}
-
-.nav-link {
-    color: white !important;
-}
-
-.btn {
-    background-color: #3F2F2F;
-    border-color: #3F2F2F;
-    color: white;
-    margin: 10px;
-    border-radius: 5px;
-}
-
-.input-background {
-    background-color: #F2F2F2;
-}
-
-.long-form {
-    width: 50%;
-    margin: 0 auto;
-}
-
+/* Categories Styles */
 .categories {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -134,33 +147,28 @@ h5.book-title {
     margin-bottom: 10px;
 }
 
-.form-label {
-    font-weight: bold;
-}
-
-.form-control {
-    margin-bottom: 0px !important;
-}
-
+/* Horizontal Rule Styles */
 hr {
     margin-top: 0 !important;
 }
 
-/* -----------------------------Star Rating -------------------------------- */
-
+/* Star Rating Styles */
 .star-rating {
     display: flex;
     direction: row;
 }
+
 .star {
     font-size: 2rem;
     cursor: pointer;
     color: #ccc;
 }
+
 .star.selected {
     color: gold;
 }
 
+/* Profile Picture Styles */
 .profile-pic {
     width: 100px;
     height: 100px;
@@ -168,12 +176,21 @@ hr {
     display: block;
 }
 
+.profile-pic-nav {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Reading List Cover Styles */
 .reading-list-cover {
     width: 100px;
     height: 150px;
     object-fit: cover;
 }
 
+/* Flash Message Styles */
 .flash-message {
     position: fixed;
     top: 50%;
@@ -188,11 +205,4 @@ hr {
     width: 90%;
     max-width: 800px;
     text-align: center;
-}
-
-.profile-pic-nav {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
 }
