@@ -18,6 +18,10 @@ This project is a Flask-based book management system. The motivation behind this
 
 The project provides a simple interface where users can view, add, edit, or delete book records and associate them with authors. This is designed to be flexible enough for expansion and suitable for different types of users, from avid readers to book clubs.
 
+The scope of the project changed slightly half way through. I had initially intended to have a voting system on the reviews, and to have a custom authentication system. This changed when I discovered Flask's native authentication module; I also replace the voting functionality with a personalised reading list on a personal profile page.
+
+
+
 ## User Experience (UX)
 ### User Stories
 #### First Time Visitor Goals
