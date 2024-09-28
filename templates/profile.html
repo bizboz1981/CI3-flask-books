@@ -1,34 +1,40 @@
 {% extends "base.html" %}
 {% set page_title = "Profile" %}
+
 {% block content %}
 <div class="container mx-auto">
     <div class="row justify-content-center">
+        <!-- User Profile Section -->
         <div class="col-12 col-lg-4 col-md-5 col-sm-6">
             <h1>User Profile</h1>
             {% if edit_mode %}
-                <form method="POST" action="{{ url_for('profile') }}">
-                    {{ form.hidden_tag() }}
-                    <div class="mb-3">
-                        {{ form.username.label(class="form-label") }}
-                        {{ form.username(class_='form-control') }}
-                    </div>
-                    <div class="mb-3">
-                        {{ form.email.label(class="form-label") }}
-                        {{ form.email(class_='form-control') }}
-                    </div>
-                    <div class="mb-3">
-                        {{ form.profile_picture_url.label(class="form-label") }}
-                        {{ form.profile_picture_url(class_='form-control') }}
-                    </div>
-                    <form method="POST" action="{{ url_for('delete_profile_picture') }}">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-danger mb-3">Delete Profile Picture</button>
-                    </form>
-                    <div class="mb-3">
-                        {{ form.submit(class_='btn btn-primary') }}
-                    </div>
-                </form>
+            <!-- Edit Profile Form -->
+            <form method="POST" action="{{ url_for('profile') }}">
+                {{ form.hidden_tag() }}
+                <div class="mb-3">
+                    {{ form.username.label(class="form-label") }}
+                    {{ form.username(class_='form-control') }}
+                </div>
+                <div class="mb-3">
+                    {{ form.email.label(class="form-label") }}
+                    {{ form.email(class_='form-control') }}
+                </div>
+                <div class="mb-3">
+                    {{ form.profile_picture_url.label(class="form-label") }}
+                    {{ form.profile_picture_url(class_='form-control') }}
+                </div>
+                <div class="mb-3">
+                    {{ form.submit(class_='btn btn-primary') }}
+                </div>
+            </form>
+
+            <!-- Delete Profile Picture Form -->
+            <form method="POST" action="{{ url_for('delete_profile_picture') }}">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit" class="btn btn-danger mb-3">Delete Profile Picture</button>
+            </form>
             {% else %}
+                <!-- Display User Profile Information -->
                 <p><strong>Profile Picture:</strong> <img src="{{ user.profile_picture_url }}" alt="Profile Picture" class="profile-pic"></p>
                 <p><strong>Username:</strong> {{ user.username }}</p>
                 <p><strong>Email:</strong> {{ user.email }}</p>
@@ -37,6 +43,8 @@
                 <a href="{{ url_for('profile', edit='true') }}" class="btn btn-secondary">Edit Profile</a>
             {% endif %}
         </div>
+        
+        <!-- Reading List Section -->
         <div class="col-12 col-lg-4 col-md-5 col-sm-6">
             <h1>Reading List</h1>
             <ul class="list-unstyled">
