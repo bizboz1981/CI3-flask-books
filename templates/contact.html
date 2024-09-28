@@ -1,22 +1,33 @@
 {% extends 'base.html' %}
 {% set page_title = "Contact us" %}
+
 {% block content %}
+<!-- Contact form starts here -->
 <form class="long-form" method="POST" action="{{ url_for('contact') }}">
     {{ form.hidden_tag() }}
+    
+    <!-- Name field -->
     <div class="mb-3">
         {{ form.name.label(class="form-label") }}
         {{ form.name(class_='form-control') }}
     </div>
+    
+    <!-- Email field -->
     <div class="mb-3">
         {{ form.email.label(class="form-label") }}
         {{ form.email(class_='form-control') }}
     </div>
+    
+    <!-- Message field -->
     <div class="mb-3">
         {{ form.message.label(class="form-label") }}
         {{ form.message(class_='form-control', rows=5) }}
     </div>
+    
+    <!-- Submit button -->
     <div class="mb-3">
         {{ form.submit(class_='btn btn-primary') }}
     </div>
 </form>
+<!-- Contact form ends here -->
 {% endblock %}

@@ -1,25 +1,38 @@
-
 {% extends "base.html" %}
 {% set page_title = "Add a book" %}
 <h1>{{ page_title }}</h1>
+
 {% block content %}
+<!-- Form to add a new book -->
 <form class="long-form" method="POST" class="form" action="{{ url_for('add_book') }}" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
+    
+    <!-- Title field -->
     {{ form.title.label(class="form-label") }}<br>
     {{ form.title(class_='form-control', id='title') }}<br>
     <hr>
+    
+    <!-- Author field -->
     {{ form.author.label(class="form-label") }}<br>
     {{ form.author(class_='form-control', id='author') }}<br>
     <hr>
+    
+    <!-- Published Date field -->
     {{ form.published_date.label(class="form-label") }}<br>
     {{ form.published_date(class_='form-control', id='published_date') }}<br>
     <hr>
+    
+    <!-- ISBN field -->
     {{ form.isbn.label(class="form-label") }}<br>
     {{ form.isbn(class_='form-control', id='isbn') }}<br>
     <hr>
+    
+    <!-- Summary field -->
     {{ form.summary.label(class="form-label") }}<br>
     {{ form.summary(class_='form-control', id='summary', rows=5, cols=40) }}<br>
     <hr>
+    
+    <!-- Categories field -->
     {{ form.categories.label(class='categories-label form-label') }}<br>
     <div class="categories">
         {% for subfield in form.categories|sort(attribute='label.text') %}
@@ -30,10 +43,13 @@
         {% endfor %}
     </div>
     <hr>
+    
+    <!-- Cover Image URL field -->
     {{ form.cover_image_url.label(class="form-label") }}<br>
     {{ form.cover_image_url(class_='form-control', id='cover_image_url') }}<br>
     <hr>
+    
+    <!-- Submit button -->
     {{ form.submit(class_='btn btn-primary') }}
-
 </form>
 {% endblock %}

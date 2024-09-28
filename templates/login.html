@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
+
 {% block content %}
+    <!-- Login Page Header -->
     <h1>Login</h1>
+    
+    <!-- Login Form -->
     <form method="POST" action="{{ url_for('login') }}">
         {{ form.hidden_tag() }}
+        
+        <!-- Email Field -->
         <div>
             {{ form.email.label }}<br>
             {{ form.email(size=32) }}<br>
@@ -10,6 +16,8 @@
                 <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </div>
+        
+        <!-- Password Field -->
         <div>
             {{ form.password.label }}<br>
             {{ form.password(size=32) }}<br>
@@ -18,9 +26,12 @@
             {% endfor %}
         </div>
         
+        <!-- Remember Me Checkbox -->
         <div>
             {{ form.remember_me() }} {{ form.remember_me.label }}
         </div>
+        
+        <!-- Submit Button -->
         <div>
             {{ form.submit() }}
         </div>

@@ -5,50 +5,61 @@
     <div class="row justify-content-center">
         <!-- Left Column: Book Details and Review Form -->
         <div class="col-12 col-lg-5">
+            <!-- Book Title -->
             <h2 class="book-title">{{ book.title }}</h2>
+            <!-- Book Author -->
             <p>Author: {{ book.author }}</p>
+            <!-- Published Date -->
             <p>Published: 
-                {% if book.published_date %}
-                    {{ book.published_date.strftime('%d %B, %Y') }}
-                {% else %}
-                    Unknown
-                {% endif %}
-            </p>
-            <img class="card-img-top book-cover-lg" 
-                 src="{{ book.cover_image_url }}" 
-                 alt="Book cover of {{ book.title }}">
-            <p>Categories: 
-                {% for category in book.categories %}
-                    {{ category.category_name }}{% if not loop.last %}, {% endif %}
-                {% endfor %}
-            </p>
-            <p>Summary: {{  book.summary  }}</p>
-            {% if current_user.is_authenticated %}
-                <div class="btn-group">
-                    <a href="{{ url_for('update_book_details', book_id=book.book_id) }}" class="btn btn-secondary" style="border-radius: 5px !important">Update Book Details</a>
-                    <form action="{{ url_for('add_to_reading_list', book_id=book.book_id) }}" method="post" class="d-inline">
-                        <button type="submit" class="btn btn-primary">Add to Reading List</button>
-                    </form>
-                </div>
-            {% endif %}
-            
-            {% if current_user.is_authenticated %}
-                <h3>Leave a Review</h3>
-                <form method="POST" action="{{ url_for('book_detail', book_id=book.book_id) }}">
-                    {{ form.hidden_tag() }}
-                    <div class="star-rating">
-                        {% for i in range(1, 6) %}
-                            <span class="star" data-value="{{ i }}">&#9733;</span>
-                        {% endfor %}
-                    </div>
-                    {{ form.rating(id='rating') }}
-                    <br>
-                    {{ form.review_text.label }}<br>
-                    {{ form.review_text(class_='form-control', rows=5) }}<br>
-                    {{ form.submit(class_='btn btn-primary') }}
-                </form>
+            {% if book.published_date %}
+                {{ book.published_date.strftime('%d %B, %Y') }}
             {% else %}
-                <p><a href="{{ url_for('login') }}">Log in</a> to leave a review.</p>
+                Unknown
+            {% endif %}
+            </p>
+            <!-- Book Cover Image -->
+            <img class="card-img-top book-cover-lg" 
+             src="{{ book.cover_image_url }}" 
+             alt="Book cover of {{ book.title }}">
+            <!-- Book Categories -->
+            <p>Categories: 
+            {% for category in book.categories %}
+                {{ category.category_name }}{% if not loop.last %}, {% endif %}
+            {% endfor %}
+            </p>
+            <!-- Book Summary -->
+            <p>Summary: {{  book.summary  }}</p>
+            <!-- Update Book Details and Add to Reading List (Visible only to authenticated users) -->
+            {% if current_user.is_authenticated %}
+            <div class="btn-group">
+                <a href="{{ url_for('update_book_details', book_id=book.book_id) }}" class="btn btn-secondary" style="border-radius: 5px !important">Update Book Details</a>
+                <form action="{{ url_for('add_to_reading_list', book_id=book.book_id) }}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-primary">Add to Reading List</button>
+                </form>
+            </div>
+            {% endif %}
+            <!-- Leave a Review Section (Visible only to authenticated users) -->
+            {% if current_user.is_authenticated %}
+            <h3>Leave a Review</h3>
+            <form method="POST" action="{{ url_for('book_detail', book_id=book.book_id) }}">
+                {{ form.hidden_tag() }}
+                <!-- Star Rating -->
+                <div class="star-rating">
+                {% for i in range(1, 6) %}
+                    <span class="star" data-value="{{ i }}">&#9733;</span>
+                {% endfor %}
+                </div>
+                {{ form.rating(id='rating') }}
+                <br>
+                <!-- Review Text -->
+                {{ form.review_text.label }}<br>
+                {{ form.review_text(class_='form-control', rows=5) }}<br>
+                <!-- Submit Button -->
+                {{ form.submit(class_='btn btn-primary') }}
+            </form>
+            {% else %}
+            <!-- Prompt to Log in for Leaving a Review -->
+            <p><a href="{{ url_for('login') }}">Log in</a> to leave a review.</p>
             {% endif %}
         </div>
         <!-- Right Column: Reviews -->

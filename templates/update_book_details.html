@@ -2,29 +2,44 @@
 
 {% block content %}
 <div class="container">
+    <!-- Page header -->
     <h2>Update Details for <em>{{ book.title }}</em></h2>
+    
+    <!-- Form to update book details -->
     <form method="POST" action="{{ url_for('update_book_details', book_id=book.book_id) }}">
         {{ form.hidden_tag() }}
+        
+        <!-- Title input field -->
         <div class="form-group">
             {{ form.title.label(class="form-label") }}
             {{ form.title(class_='form-control') }}
         </div>
+        
+        <!-- Author input field -->
         <div class="form-group">
             {{ form.author.label(class="form-label") }}
             {{ form.author(class_='form-control') }}
         </div>
+        
+        <!-- Cover image URL input field -->
         <div class="form-group">
             {{ form.cover_image_url.label(class="form-label") }}
             {{ form.cover_image_url(class_='form-control') }}
         </div>
+        
+        <!-- Description input field -->
         <div class="form-group">
             {{ form.description.label(class="form-label") }}
             {{ form.description(class_='form-control') }}
         </div>
+        
+        <!-- Published date input field -->
         <div class="form-group">
             {{ form.published_date.label(class="form-label") }}
             {{ form.published_date(class_='form-control') }}
         </div>
+        
+        <!-- Categories checkboxes -->
         <div class="form-group">
             {{ form.categories.label(class='categories-label form-label') }}
             <div class="categories">
@@ -36,9 +51,11 @@
                 {% endfor %}
             </div>
         </div>
+        
+        <!-- Submit button -->
         <div class="form-group">
             {{ form.submit(class_='btn btn-primary') }}
         </div>
     </form>
 </div>
-{% endblock %}
+{% endblock %}</div>

@@ -1,24 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta tags for character set, viewport settings, and compatibility -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="description" content="A website to explore and add books.">
     <meta name="keywords" content="books, reading, library, book reviews">
     <meta name="author" content="Bill Saunders">
+    
+    <!-- Link to external CSS files -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap_styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <!-- Title of the webpage -->
     <title>My Book Website</title>
 </head>
 <body>
+    <!-- Navigation bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
+            <!-- Brand name -->
             <a class="navbar-brand" style="color: blanchedalmond;" href="{{ url_for('home') }}">My Book Website</a>
+            
+            <!-- Toggler button for responsive navbar -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            
+            <!-- Collapsible navbar content -->
             <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Left-aligned navbar links -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('about') }}">About</a></li>
@@ -27,6 +39,8 @@
                         <li class="nav-item"><a class="nav-link" href="{{ url_for('add_book') }}">Add Book</a></li>
                     {% endif %}
                 </ul>
+                
+                <!-- Right-aligned navbar links -->
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     {% if current_user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link" href="{{ url_for('profile') }}">Profile</a></li>
@@ -44,6 +58,8 @@
             </div>
         </div>
     </nav>
+    
+    <!-- Flash messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
         <div class="flash-message" id="flash-message">
@@ -53,18 +69,26 @@
         </div>
     {% endif %}
     {% endwith %}
+    
+    <!-- Page title -->
     {% if page_title is not defined %}
     {% set page_title = "Love Books" %}
     {% endif %}
     <header>
         <h1>{{ page_title }}</h1>
     </header>
+    
+    <!-- Main content area -->
     <main>
         {% block content %}{% endblock %}
     </main>
+    
+    <!-- Footer -->
     <footer>
         <p>&copy; {{ current_year }} My Website. All rights reserved.</p>
     </footer>
+    
+    <!-- JavaScript files -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
     <script src="{{ url_for('static', filename='js/carousel.js') }}"></script>
