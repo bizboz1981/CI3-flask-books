@@ -3,6 +3,7 @@
 ![am_i_responsive](static/assets/img/am_i_responsive.png)
 
 Link to live project: [CI3 Flask Books](https://ci3-book-review-d8d5166064da.herokuapp.com)
+To register a new admin account, please sign up using an email that ends in @admin.com
 
 ## Table of Contents
 - [Project Background & Summary](#project-background--summary)
@@ -31,37 +32,51 @@ The scope of the project changed slightly half way through. I had initially inte
 ## User Experience (UX)
 ### User Stories
 #### First Time Visitor Goals
-1. As a First Time Visitor, I want to easily understand the purpose of the application and how to navigate through it.
-2. As a First Time Visitor, I want to be able to search for books and see the details.
-3. As a First Time Visitor, I want a simple way to add or manage books in the system.
+
+|Goal   |Achieved?|
+|-------|---------|
+|As a First Time Visitor, I want to easily understand the purpose of the application and how to navigate through it.|The purpose of the app is clear and navigation is intuitive|
+|As a First Time Visitor, I want to be able to search for books and see the details.|The search function is obvious on the home page and book details are clearly displayed|
+|As a First Time Visitor, I want a simple way to add or manage books in the system.|There is a navbar link to 'Add Book' and an easy way to edit details of existing books|
 
 #### Returning Visitor Goals
-1. As a Returning Visitor, I want to easily find the books I have previously added.
-2. As a Returning Visitor, I want to update or delete records with ease.
-3. As a Returning Visitor, I want to stay informed about any new updates to the platform.
+|Goal   |Achieved?|
+|-------|---------|
+|As a Returning Visitor, I want to easily find the books I have previously added.|Although you cannot search or filter by an 'added_by' field, you can search for specific titles/authors|
+|As a Returning Visitor, I want to update or delete records with ease.|Book records and user profile can be updated; profile picture can be deleted; books can be removed from reading list; Books, reviews and contact messages can only be deleted by admins|
+|As a Returning Visitor, I want to stay informed about any new updates to the platform.|There is currently no mechanism to do this|
 
 #### Frequent Visitor Goals
-1. As a Frequent Visitor, I want to see all book records displayed in an organized manner.
-2. As a Frequent Visitor, I want to ensure that the system functions smoothly with all its features, including book and author management.
-3. As a Frequent Visitor, I want to access the system without any technical errors or bugs.
+|Goal   |Achieved?|
+|-------|---------|
+|As a Frequent Visitor, I want to see all book records displayed in an organized manner.|Books are displayed in a carousel with the goal of showing users new content. Specific records can be searched. A future feature could include different layout options|
+|As a Frequent Visitor, I want to ensure that the system functions smoothly with all its features, including book and author management.|Frequent users can sign up for an admin account which gives access to more powerful data management tools|
+|As a Frequent Visitor, I want to access the system without any technical errors or bugs.|Currently, everything runs smoothly|
 
 ## Features & Structure
 ### Existing Features
-- **Homepage & Navigation**: The homepage provides users with a clean and simple interface, displaying the list of books and a navigation menu for easy access.
-- **Book Listing**: Users can view a list of books with details such as title, author, and published year. Clicking on a book title allows the user to view more detailed information.
-- **Add/Edit/Delete Book**: Users can add new books, update the details of a book, or delete a book from the system.
+- **Homepage & Navigation**: The homepage provides users with a clean and simple interface, displaying the carousel of books and a search bar for easy access.
+- **Book Listing**: Users can view books with details such as title, author, and publication year. Clicking on a book allows the user to view more detailed information.
+- **Add/Edit/Delete Book**: Users can add new books and update the details of a book.
 - **Author Management**: Manage author details and associate books with specific authors.
 - **User Authentication**: Authentication ensures that only registered users can access full functionality, such as adding or editing book records.
 - **Search Functionality**: A search bar allows users to quickly find books by title or author.
 
 ### Future Features
-- Improve reading list features like removing books, or marking as read.
+- Improve reading list features like marking as read.
 - Add 'forgotten password' feature
 - Add email notifications for book updates or new entries.
+- Allow users to delete their own books/reviews
+- Allow searching/filtering by category
+- Allow users to query on books they added themselves
+- Allow different ways of displaying the catalogue of books (e.g. all books alphabetically, random carousel etc.)
+- Hook up email functionality
 
 ## Design
 ### Wireframes
 The wireframes are designed to be simple, with a focus on usability. The layout is clean, ensuring users can easily navigate and manage entries.
+
+![wireframe](static/assets/img/wireframe.jpeg)
 
 ### Colour Scheme
 The application uses neutral colors, such as off-whites and browns, to maintain a classic and functional appearance, without unnecessary distractions.
