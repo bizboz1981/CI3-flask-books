@@ -22,7 +22,7 @@
                             <div class="card h-100">
                                 <!-- Product image-->
                                 <img class="card-img-top book_cover" 
-                                    src="{{ book.cover_image_url or url_for('static', filename='static/assets/img/default_image.jpeg') }}" 
+                                    src="{{ book.cover_image_url if book.cover_image_url else url_for('static', filename='assets/img/default_image.jpeg') }}" 
                                     alt="Book cover of {{ book.title }}">
                                 <!-- Product details-->
                                 <div class="card-body p-4">
