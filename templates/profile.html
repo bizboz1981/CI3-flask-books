@@ -55,6 +55,9 @@
                             <p class="mb-1"><strong>{{ book.book.title }}</strong></p>
                             <p class="mb-1">{{ book.book.author }}</p>
                             <p class="mb-1">{{ book.book.published_date }}</p>
+                            <form method="POST" action="{{ url_for('remove_from_reading_list', book_id=book.book_id) }}">
+                                <button type="submit" class="btn btn-danger">Remove from Reading List</button>
+                            </form>
                         </div>
                     </li>
                 {% endfor %}

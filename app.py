@@ -1,41 +1,39 @@
-import os
 import base64
-from extensions import db, migrate
-from models import Book, Review, Category, User, ContactMessage, ReadingList
-from forms import (
-    RegistrationForm,
-    LoginForm,
-    ReviewForm,
-    BookForm,
-    ContactForm,
-    UpdateBookDetailsForm,
-    EditProfileForm,
-)
-
+import os
 from datetime import datetime, timezone
-from flask_login import (
-    login_user,
-    logout_user,
-    current_user,
-    login_required,
-    LoginManager,
-)
+from functools import wraps
 
+from dotenv import load_dotenv
 from flask import (
     Flask,
-    render_template,
     abort,
-    redirect,
-    url_for,
     flash,
+    redirect,
+    render_template,
     request,  # type: ignore
+    url_for,
 )
-
-from functools import wraps
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from dotenv import load_dotenv
+from flask_login import (
+    LoginManager,
+    current_user,
+    login_required,
+    login_user,
+    logout_user,
+)
 
+from extensions import db, migrate
+from forms import (
+    BookForm,
+    ContactForm,
+    EditProfileForm,
+    LoginForm,
+    RegistrationForm,
+    ReviewForm,
+    UpdateBookDetailsForm,
+)
+from models import Book, Category, ContactMessage, ReadingList, Review, User
 
 load_dotenv()  # Load environment variables from .env file
 
@@ -225,6 +223,7 @@ def create_app():
         # Redirect to the profile page
         return redirect(url_for("profile"))
 
+    # route for adding a book to the reading list
     @app.route("/add_to_reading_list/<int:book_id>", methods=["POST"])
     @login_required
     def add_to_reading_list(book_id):
@@ -240,6 +239,25 @@ def create_app():
         else:
             flash("Book is already in your reading list.", "info")
         return redirect(url_for("book_detail", book_id=book_id))
+
+    # route for removing a book from the reading list
+    @app.route("/remove_from_reading_list/<int:book_id>", methods=["POST"])
+    @login_required
+    def remove_from_reading_list(book_id):
+        # Ensures the book exists or raises a 404 error
+        # Although 'book' is not used explicitly
+        # it is necessary to raise a 404 error
+        book = Book.query.get_or_404(book_id)
+        reading_list_entry = ReadingList.query.filter_by(
+            user_id=current_user.user_id, book_id=book_id
+        ).first()
+        if reading_list_entry:
+            db.session.delete(reading_list_entry)
+            db.session.commit()
+            flash("Book removed from your reading list!", "success")
+        else:
+            flash("Book is not in your reading list.", "info")
+        return redirect(url_for("profile"))
 
     # Initialize the LoginManager
     login_manager = LoginManager()
