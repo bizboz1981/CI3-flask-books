@@ -466,5 +466,5 @@ if __name__ == "__main__":
         port=int(
             os.environ.get("PORT", 8080)
         ),  # Get the port from environment variables or default to 8080
-        debug=True,  # Enable debug mode for development
+        debug=False,  # Disable debug mode for deployment
     )
