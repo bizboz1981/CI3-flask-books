@@ -16,6 +16,8 @@
    "workbench.colorTheme": "Visual Studio Dark",
    "terminal.integrated.gpuAcceleration": "canvas",
    "cSpell.words": [
+      "bvvsodf",
+      "lrlnr",
       "sqla",
       "SQLALCHEMY",
       "wtforms"
