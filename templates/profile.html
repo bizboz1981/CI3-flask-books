@@ -50,7 +50,9 @@
             <ul class="list-unstyled">
                 {% for book in user.reading_list %}
                     <li class="d-flex mb-3">
-                        <img src="{{ book.book.cover_image_url }}" alt="Cover of {{ book.book.title }}" class="reading-list-cover me-3">
+                        <img src="{{ book.book.cover_image_url if book.book.cover_image_url else url_for('static', filename='assets/img/default_image.jpeg') }}"  
+                        alt="Cover of {{ book.book.title }}" 
+                        class="reading-list-cover me-3">
                         <div>
                             <p class="mb-1"><strong>{{ book.book.title }}</strong></p>
                             <p class="mb-1">{{ book.book.author }}</p>
