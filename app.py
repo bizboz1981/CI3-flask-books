@@ -49,8 +49,8 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = (
         "postgresql://u44rtq8lrlnr5l:pfa61c23e415abe4f10260"
         "bab560e9c7f762ba7fc9fde2c68757f92940a0b6f20"
-        "@c7u1tn6bvvsodf.cluster-czz5s0kz4scl.eu-west-1.rds.amazonaws.com:543"
-        "2/d7q5q599jdl134"
+        "@c7u1tn6bvvsodf.cluster-czz5s0kz4scl.eu-west-1.rds.amazonaws.com:5432"
+        "/d7q5q599jdl134"
     )
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
@@ -106,10 +106,12 @@ def create_app():
     # route for home page (index.html)
     @app.route("/")
     def home():
-        # Get the search query from the request arguments, default to an empty string if not provided
+        # Get the search query from the request arguments, default to an
+        # empty string if not provided
         query = request.args.get("q", "")
 
-        # If a search query is provided, filter books by title or author matching the query
+        # If a search query is provided, filter books by title or
+        # author matching the query
         if query:
             all_books = Book.query.filter(
                 (Book.title.ilike(f"%{query}%")) | (Book.author.ilike(f"%{query}%"))
@@ -226,6 +228,9 @@ def create_app():
     @app.route("/add_to_reading_list/<int:book_id>", methods=["POST"])
     @login_required
     def add_to_reading_list(book_id):
+        # Ensures the book exists or raises a 404 error
+        # Although 'book' is not used explicitly
+        # it is necessary to raise a 404 error
         book = Book.query.get_or_404(book_id)
         if not any(rl.book_id == book_id for rl in current_user.reading_list):
             new_entry = ReadingList(user_id=current_user.user_id, book_id=book_id)
@@ -261,7 +266,8 @@ def create_app():
             # Retrieve the user by email from the database
             user = User.query.filter_by(email=form.email.data).first()
 
-            # If the user does not exist or the password is incorrect, flash an error message
+            # If the user does not exist or the password is incorrect,
+            # flash an error message
             if user is None or not user.check_password(form.password.data):
                 flash("Invalid email or password")
                 return redirect(url_for("login"))
@@ -378,7 +384,8 @@ def create_app():
             flash("Book details updated successfully!", "success")
             return redirect(url_for("book_detail", book_id=book_id))
 
-        # Pre-populate the form with the existing description if the request method is GET
+        # Pre-populate the form with the existing description if the
+        # request method is GET
         if request.method == "GET":
             form.title.data = book.title
             form.author.data = book.author
@@ -437,7 +444,7 @@ if __name__ == "__main__":
     app.run(
         host=os.environ.get(
             "IP", "0.0.0.0"
-        ),  # Get the IP address from environment variables or default to 0.0.0.0
+        ),  # Get the IP address from env variables or default to 0.0.0.0
         port=int(
             os.environ.get("PORT", 8080)
         ),  # Get the port from environment variables or default to 8080
