@@ -19,8 +19,8 @@
             </p>
             <!-- Book Cover Image -->
             <img class="card-img-top book-cover-lg" 
-             src="{{ book.cover_image_url }}" 
-             alt="Book cover of {{ book.title }}">
+            src="{{ book.cover_image_url if book.cover_image_url else url_for('static', filename='assets/img/default_image.jpeg') }}" 
+            alt="Book cover of {{ book.title }}">
             <!-- Book Categories -->
             <p>Categories: 
             {% for category in book.categories %}
