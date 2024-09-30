@@ -155,7 +155,6 @@ hr {
 /* Star Rating Styles */
 .star-rating {
     display: flex;
-    direction: row;
 }
 
 .star {
