@@ -35,10 +35,10 @@
     <!-- Categories field -->
     {{ form.categories.label(class='categories-label form-label') }}<br>
     <div class="categories">
-        {% for subfield in form.categories|sort(attribute='label.text') %}
+        {% for subfield in form.categories %}
             <div class="form-check">
-                {{ subfield(class_='form-check-input') }}
-                {{ subfield.label(class_='form-check-label') }}
+                {{ subfield(class_='form-check-input', id=subfield.id) }}
+                {{ subfield.label(class_='form-check-label', for=subfield.id) }}
             </div>
         {% endfor %}
     </div>
