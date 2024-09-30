@@ -4,7 +4,7 @@
 
 {% block content %}
 <!-- Form to add a new book -->
-<form class="long-form" method="POST" class="form" action="{{ url_for('add_book') }}" enctype="multipart/form-data">
+<form class="long-form form" method="POST" action="{{ url_for('add_book') }}" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
     
     <!-- Title field -->
@@ -29,16 +29,16 @@
     
     <!-- Summary field -->
     {{ form.summary.label(class="form-label") }}<br>
-    {{ form.summary(class_='form-control', id='summary', rows=5, cols=40) }}<br>
+    {{ form.summary(class_='form-control', id='summary', rows=5, cols=40, widget=widgets.TextArea()) }}<br>
     <hr>
     
     <!-- Categories field -->
     {{ form.categories.label(class='categories-label form-label') }}<br>
     <div class="categories">
-        {% for subfield in form.categories|sort(attribute='label.text') %}
+        {% for subfield in form.categories %}
             <div class="form-check">
-                {{ subfield(class_='form-check-input') }}
-                {{ subfield.label(class_='form-check-label') }}
+                {{ subfield(class_='form-check-input', id=subfield.id) }}
+                {{ subfield.label(class_='form-check-label', for=subfield.id) }}
             </div>
         {% endfor %}
     </div>
