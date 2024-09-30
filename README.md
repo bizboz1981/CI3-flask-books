@@ -106,9 +106,9 @@ The application uses neutral colors, such as off-whites and browns, to maintain 
 - [Github Copilot](https://github.com/features/copilot) for debugging and efficient use of terminal
 
 ### Learning Resources
-- [Flask Documentation](https://flask.palletsprojects.com/en/2.0.x/) - for backend guidance.
+- [Flask Documentation](https://flask.palletsprojects.com/en/3.0.x/) - for backend guidance.
 - [W3Schools](https://www.w3schools.com) - for frontend and design inspiration.
-- [Stack Overflow](https://stackoverflow.com) - for troubleshooting issues.
+- [Stack Overflow](https://stackoverflow.com) - used extensively throughout the project. Too many articles to list individually.
 - [Codecademy](https://www.codecademy.com) - the course on Flask was invaluable.
 
 ## Testing
@@ -120,8 +120,9 @@ Extensive manual testing has been carried out to ensure all CRUD operations, for
 | Book Search         | Search for a book by title or author    | Search results display correct entries      |
 | Add New Book        | Add a new book to the collection        | Book is successfully added and displayed    |
 | Edit Book Details   | Edit the details of an existing book    | Updates are saved and reflected immediately |
-| Delete Book         | Delete a book from the collection       | Book is successfully deleted                |
-| Author Management   | Add or edit an author                   | Author details are saved and associated     |
+| Delete Book         | Delete a book from the reading list     | Book is successfully deleted                |
+| Leave a message   | Submit a contact form                   | Form is submitted and msg can be viewed by admin     |
+| Edit Profile | Edit personal details in profile page | details can be successfully changed |
 
 ### Browser Testing
 | Browser             | Compatibility | Responsiveness | Issues   |
@@ -132,9 +133,10 @@ Extensive manual testing has been carried out to ensure all CRUD operations, for
 | Edge                | Good          | Good           | None     |
 
 ### Online Validation Services
-- **HTML Validator**: Validated with no errors.
-- **CSS Validator**: Passed with no significant issues.
+- **HTML Validator**: Validated with no major errors (I have been unable to eradicate 1 error from the add_book page: The value of the for attribute of the label element must be the ID of a non-hidden form control.).
+- **CSS Validator**: Passed with no significant issues (3 warnings I have chosen to ignore as insignificant).
 - **Flask Debugging**: Used Flask's built-in debugger to resolve any backend issues.
+- **PEP 8**: I used flake8 to format my python files according to PEP8 standards. I have exceeded the line length of 79 chars on a few considered occasions in app.py as strict adherence would have compromised readability.
 
 ## Deployment
 The application is deployed on GitHub Pages for frontend hosting. You can also deploy the Flask backend using Heroku.
@@ -157,3 +159,5 @@ Please feel free to clone the project and use it for your own site. In order to 
 5. Deploy the application to Heroku: ```git push heroku main```
 6. Run the database migrations on Heroku: ```heroku run flask db upgrade```
 7. Open the dployed application: ```heroku open```
+
+I would like to thank my mentor Jack Wachira for his help and advice.
