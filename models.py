@@ -116,6 +116,24 @@ class Category(db.Model):
     )  # Relationship to the BookCategory model
 
 
+# BookCategory class to define 'book_categories' table
+class BookCategory(db.Model):
+    # This table has a compound PK made up of 2 FKs: book_id and category_id
+    __tablename__ = "book_categories"
+    book_id = db.Column(
+        db.Integer,
+        db.ForeignKey("books.book_id", ondelete="CASCADE"),
+        primary_key=True,
+        nullable=False,
+    )  # Foreign key to the Book table, primary key, not nullable
+    category_id = db.Column(
+        db.Integer,
+        db.ForeignKey("categories.category_id"),
+        primary_key=True,
+        nullable=False,
+    )  # Foreign key to the Category table, primary key, not nullable
+
+
 # ContactMessage class to define 'contact_messages' table
 class ContactMessage(db.Model):
     __tablename__ = "contact_messages"
