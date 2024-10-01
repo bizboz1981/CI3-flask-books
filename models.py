@@ -1,7 +1,9 @@
 from datetime import datetime, timezone
-from extensions import db
-from werkzeug.security import generate_password_hash, check_password_hash
+
 from flask_login import UserMixin
+from werkzeug.security import check_password_hash, generate_password_hash
+
+from extensions import db
 
 
 # User class to define 'users' table
@@ -112,24 +114,6 @@ class Category(db.Model):
     books = db.relationship(
         "BookCategory", backref="category", lazy=True, viewonly=True
     )  # Relationship to the BookCategory model
-
-
-# BookCategory class to define 'book_categories' table
-class BookCategory(db.Model):
-    # This table has a compound PK made up of 2 FKs: book_id and category_id
-    __tablename__ = "book_categories"
-    book_id = db.Column(
-        db.Integer,
-        db.ForeignKey("books.book_id", ondelete="CASCADE"),
-        primary_key=True,
-        nullable=False,
-    )  # Foreign key to the Book table, primary key, not nullable
-    category_id = db.Column(
-        db.Integer,
-        db.ForeignKey("categories.category_id"),
-        primary_key=True,
-        nullable=False,
-    )  # Foreign key to the Category table, primary key, not nullable
 
 
 # ContactMessage class to define 'contact_messages' table
