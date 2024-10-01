@@ -63,6 +63,7 @@ The scope of the project changed slightly half way through. I had initially inte
 - **Search Functionality**: A search bar allows users to quickly find books by title or author.
 
 ### Future Features
+- Improve general styling. I'm aware that the styling leaves much to be desired, however with limited time, my focus was on the data and business logic.
 - Improve reading list features like marking as read.
 - Add 'forgotten password' feature
 - Add email notifications for book updates or new entries.
@@ -71,6 +72,7 @@ The scope of the project changed slightly half way through. I had initially inte
 - Allow users to query on books they added themselves
 - Allow different ways of displaying the catalogue of books (e.g. all books alphabetically, random carousel etc.)
 - Hook up email functionality
+- If the project were to grow any larger I would modularise the codebase
 
 ## Design
 ### Wireframes
@@ -139,7 +141,7 @@ Extensive manual testing has been carried out to ensure all CRUD operations, for
 - **PEP 8**: I used flake8 to format my python files according to PEP8 standards. I have exceeded the line length of 79 chars on a few considered occasions in app.py as strict adherence would have compromised readability.
 
 ## Deployment
-The application is deployed on GitHub Pages for frontend hosting. You can also deploy the Flask backend using Heroku.
+The application is deployed on Heroku. 
 
 Please feel free to clone the project and use it for your own site. In order to do this:
 
