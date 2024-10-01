@@ -28,6 +28,7 @@ The scope of the project changed slightly half way through. I had initially inte
 
 ### The final data model
 ![data_model_2](static/assets/img/data_model_2.jpeg)
+N.B. the book_categories table is unused in the final codebase and was therefore removed from models.py
 
 ## User Experience (UX)
 ### User Stories
@@ -151,7 +152,7 @@ Please feel free to clone the project and use it for your own site. In order to 
 3. Create and activate a virtual environment: <br>```python3 -m venv venv```<br>```source venv/bin/activate``` (On Windows use `venv\Scripts\activate`)
 4. Install the required dependencies from the requirements.txt file: ```pip install -r requirements.txt```
 5. Create a .env file in the root directory and add the necessary environment variables: ```touch .env```
-6. Add the following lines to the .env file: <br> ```SECRET_KEY=your_secret_key``` <br> ```SQLALCHEMY_DATABASE_URI=your_database_uri```
+6. Add the following lines to the .env file: <br> ```SECRET_KEY=your_secret_key``` <br> ```SQLALCHEMY_DATABASE_URI=your_database_uri``` <br> ```HEROKU_API_KEY=your_heroku_key_here```
 
 ### Deploy to Heroku
 1. Log in to your Heroku account using the Heroku CLI: ```heroku login```
