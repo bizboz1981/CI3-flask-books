@@ -2,7 +2,7 @@
 
 ![am_i_responsive](static/assets/img/am_i_responsive.png)
 
-Link to live project: [CI3 Flask Books](https://ci3-book-review-d8d5166064da.herokuapp.com)
+Link to live project: [CI3 Flask Books](https://ci3-book-review-d8d5166064da.herokuapp.com)  
 To register a new admin account, please sign up using an email that ends in @admin.com
 
 ## Table of Contents
