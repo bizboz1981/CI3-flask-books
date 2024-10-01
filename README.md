@@ -28,7 +28,6 @@ The scope of the project changed slightly half way through. I had initially inte
 
 ### The final data model
 ![data_model_2](static/assets/img/data_model_2.jpeg)
-N.B. the book_categories table is unused in the final codebase and was therefore removed from models.py
 
 ## User Experience (UX)
 ### User Stories
